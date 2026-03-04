@@ -7,77 +7,228 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #1a2b3c; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #1a2b3c; display: flex; flex-direction: column; height: 100vh; }
 
+    /* TOP HEADER */
     .header {
       background: #1e2d42;
       color: white;
-      padding: 24px 40px;
+      padding: 16px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-shrink: 0;
+      z-index: 10;
     }
-    .header h1 { font-size: 22px; font-weight: 700; }
-    .header .subtitle { font-size: 13px; color: #6b8aaa; margin-top: 4px; }
+    .header h1 { font-size: 18px; font-weight: 700; }
+    .header .subtitle { font-size: 11px; color: #6b8aaa; margin-top: 3px; }
     .badge {
       background: rgba(46,134,193,0.2);
       color: #5bb8f5;
       border: 1px solid rgba(46,134,193,0.4);
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
     }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+    /* BODY LAYOUT */
+    .body-wrap {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
 
+    /* SIDEBAR */
+    .sidebar {
+      width: 200px;
+      background: #1a2535;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 0;
+    }
+
+    .sidebar-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: #3a5068;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 20px;
+      margin-bottom: 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      cursor: pointer;
+      color: #6b8aaa;
+      font-size: 13px;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .nav-item:hover { background: rgba(46,134,193,0.08); color: #a8c4e0; }
+
+    .nav-item.active {
+      background: rgba(46,134,193,0.12);
+      color: #5bb8f5;
+      border-left: 3px solid #2E86C1;
+    }
+
+    .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+
+    .sidebar-divider {
+      height: 1px;
+      background: #1e3050;
+      margin: 16px 20px;
+    }
+
+    /* MAIN CONTENT */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px;
+    }
+
+    /* TAB PAGES */
+    .tab-page { display: none; }
+    .tab-page.active { display: block; }
+
+    /* ── OVERVIEW ── */
     .cards {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
+      gap: 14px;
+      margin-bottom: 24px;
     }
 
     .card {
       background: white;
       border-radius: 12px;
-      padding: 20px 16px;
+      padding: 18px 14px;
       text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
-    .card .city { font-size: 12px; font-weight: 700; color: #2E86C1; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .card .temp { font-size: 28px; font-weight: 700; color: #1a2b3c; }
-    .card .unit { font-size: 14px; color: #95a5a6; }
-    .card .condition { font-size: 11px; color: #7f8c8d; margin-top: 6px; text-transform: capitalize; }
-    .card .humidity { font-size: 11px; color: #95a5a6; margin-top: 4px; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .card .city { font-size: 11px; font-weight: 700; color: #2E86C1; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .card .temp { font-size: 26px; font-weight: 700; color: #1a2b3c; }
+    .card .unit { font-size: 13px; color: #95a5a6; }
+    .card .condition { font-size: 11px; color: #7f8c8d; margin-top: 5px; text-transform: capitalize; }
+    .card .humidity { font-size: 11px; color: #95a5a6; margin-top: 3px; }
+    .card .wind { font-size: 11px; color: #95a5a6; margin-top: 2px; }
 
-    .charts {
+    .charts-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 32px;
+      gap: 20px;
     }
 
     .chart-card {
       background: white;
       border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
-    .chart-card h3 { font-size: 14px; font-weight: 600; color: #1a2b3c; margin-bottom: 16px; }
+    .chart-card h3 { font-size: 13px; font-weight: 600; color: #1a2b3c; margin-bottom: 14px; }
 
-    .footer {
+    /* ── CITY DETAILS ── */
+    .city-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .city-btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1.5px solid #dde4ed;
+      background: white;
+      font-size: 12px;
+      font-weight: 600;
+      color: #607080;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .city-btn:hover { border-color: #2E86C1; color: #2E86C1; }
+    .city-btn.active { background: #2E86C1; color: white; border-color: #2E86C1; }
+
+    .city-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
       text-align: center;
-      font-size: 11px;
-      color: #95a5a6;
-      padding: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .stat-box .label { font-size: 11px; color: #95a5a6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .stat-box .value { font-size: 28px; font-weight: 700; color: #1a2b3c; }
+    .stat-box .unit { font-size: 13px; color: #95a5a6; }
+    .stat-box .sub { font-size: 11px; color: #7f8c8d; margin-top: 4px; text-transform: capitalize; }
+
+    .detail-chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
 
-    .timestamp { font-size: 11px; color: #95a5a6; margin-top: 2px; }
+    /* ── COMPARISON ── */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .full-chart {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      margin-bottom: 20px;
+    }
+    .full-chart h3 { font-size: 13px; font-weight: 600; color: #1a2b3c; margin-bottom: 14px; }
+
+    .table-card {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .table-card h3 { font-size: 13px; font-weight: 600; color: #1a2b3c; margin-bottom: 16px; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th { font-size: 11px; font-weight: 700; color: #95a5a6; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px; text-align: left; border-bottom: 2px solid #f0f4f8; }
+    td { font-size: 13px; color: #2c3e50; padding: 10px 12px; border-bottom: 1px solid #f0f4f8; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    .rank { font-weight: 700; color: #2E86C1; }
+
+    /* PAGE TITLE */
+    .page-title { font-size: 18px; font-weight: 700; color: #1a2b3c; margin-bottom: 6px; }
+    .page-sub { font-size: 12px; color: #95a5a6; margin-bottom: 24px; }
+
+    /* FOOTER */
+    .footer { text-align: center; font-size: 10px; color: #95a5a6; padding: 16px; margin-top: 8px; }
   </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <div>
     <h1>🌦️ Live Weather Dashboard</h1>
@@ -86,95 +237,325 @@
   <div class="badge" id="last-updated">Loading...</div>
 </div>
 
-<div class="container">
+<div class="body-wrap">
 
-  <!-- CITY CARDS -->
-  <div class="cards" id="city-cards"></div>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-label">Navigation</div>
 
-  <!-- CHARTS -->
-  <div class="charts">
-    <div class="chart-card">
-      <h3>Temperature by City (°C)</h3>
-      <canvas id="tempChart"></canvas>
+    <div class="nav-item active" onclick="showTab('overview', this)">
+      <span class="icon">📊</span> Overview
     </div>
-    <div class="chart-card">
-      <h3>Humidity by City (%)</h3>
-      <canvas id="humidityChart"></canvas>
+    <div class="nav-item" onclick="showTab('details', this)">
+      <span class="icon">🏙️</span> City Details
+    </div>
+    <div class="nav-item" onclick="showTab('comparison', this)">
+      <span class="icon">⚖️</span> Comparison
+    </div>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Info</div>
+
+    <div class="nav-item" style="cursor:default; font-size:11px; color:#3a5068; padding-top:8px;">
+      <span class="icon">🔄</span> Daily at 08:00 UTC
+    </div>
+    <div class="nav-item" style="cursor:default; font-size:11px; color:#3a5068;">
+      <span class="icon">📍</span> 5 US Cities
+    </div>
+    <div class="nav-item" style="cursor:default; font-size:11px; color:#3a5068;">
+      <span class="icon">☁️</span> OpenWeather API
     </div>
   </div>
 
-</div>
+  <!-- MAIN -->
+  <div class="main">
 
-<div class="footer">
-  Data refreshes daily at 08:00 UTC via automated AWS pipeline &nbsp;·&nbsp; Built by Jawad Mohammad
+    <!-- ── TAB 1: OVERVIEW ── -->
+    <div class="tab-page active" id="tab-overview">
+      <div class="page-title">Overview</div>
+      <div class="page-sub">Latest weather snapshot across all 5 cities</div>
+
+      <div class="cards" id="city-cards"></div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>🌡️ Temperature by City (°C)</h3>
+          <canvas id="tempChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>💧 Humidity by City (%)</h3>
+          <canvas id="humidityChart"></canvas>
+        </div>
+      </div>
+
+      <div class="footer">Data refreshes daily at 08:00 UTC via automated AWS pipeline &nbsp;·&nbsp; Built by Jawad Mohammad</div>
+    </div>
+
+    <!-- ── TAB 2: CITY DETAILS ── -->
+    <div class="tab-page" id="tab-details">
+      <div class="page-title">City Details</div>
+      <div class="page-sub">Select a city to explore its full weather breakdown</div>
+
+      <div class="city-selector" id="city-selector"></div>
+
+      <div class="city-detail-grid" id="city-stat-boxes"></div>
+
+      <div class="detail-chart-grid">
+        <div class="chart-card">
+          <h3>🌡️ Temperature vs Humidity</h3>
+          <canvas id="cityTempHumChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>💨 Wind Speed (m/s)</h3>
+          <canvas id="cityWindChart"></canvas>
+        </div>
+      </div>
+
+      <div class="footer">Built by Jawad Mohammad</div>
+    </div>
+
+    <!-- ── TAB 3: COMPARISON ── -->
+    <div class="tab-page" id="tab-comparison">
+      <div class="page-title">City Comparison</div>
+      <div class="page-sub">Side-by-side comparison across all weather metrics</div>
+
+      <div class="comparison-grid">
+        <div class="chart-card">
+          <h3>💨 Wind Speed by City (m/s)</h3>
+          <canvas id="windChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>🌡️ Temperature vs 💧 Humidity</h3>
+          <canvas id="tempHumidOverlayChart"></canvas>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <h3>📋 Full Data Table</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>City</th>
+              <th>Temperature (°C)</th>
+              <th>Humidity (%)</th>
+              <th>Wind Speed (m/s)</th>
+              <th>Condition</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+          <tbody id="data-table"></tbody>
+        </table>
+      </div>
+
+      <div class="footer">Built by Jawad Mohammad</div>
+    </div>
+
+  </div>
 </div>
 
 <script>
+  let weatherData = [];
+  let selectedCity = null;
+  let cityDetailCharts = {};
+
+  const COLORS = ['#2E86C1','#27AE60','#E67E22','#8E44AD','#E74C3C'];
+
+  // ── TAB SWITCHING ──
+  function showTab(name, el) {
+    document.querySelectorAll('.tab-page').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    el.classList.add('active');
+  }
+
+  // ── LOAD DATA ──
   async function loadData() {
     const res = await fetch('/weather/latest');
-    const data = await res.json();
+    weatherData = await res.json();
 
-    // Update timestamp badge
-    const ts = data[0]?.timestamp || '';
+    const ts = weatherData[0]?.timestamp || '';
     document.getElementById('last-updated').textContent = 'Last updated: ' + ts;
 
-    // City cards
+    buildOverview();
+    buildCitySelector();
+    buildComparison();
+  }
+
+  // ── OVERVIEW ──
+  function buildOverview() {
     const cardsEl = document.getElementById('city-cards');
     cardsEl.innerHTML = '';
-    data.forEach(d => {
+    weatherData.forEach((d, i) => {
       cardsEl.innerHTML += `
-        <div class="card">
+        <div class="card" onclick="goToCity('${d.city}')">
           <div class="city">${d.city}</div>
           <div class="temp">${d.temperature_c.toFixed(1)}<span class="unit">°C</span></div>
           <div class="condition">${d.weather_condition}</div>
-          <div class="humidity">💧 ${d.humidity_percent}% humidity</div>
+          <div class="humidity">💧 ${d.humidity_percent}%</div>
+          <div class="wind">💨 ${d.wind_speed_ms} m/s</div>
         </div>`;
     });
 
-    const cities = data.map(d => d.city);
-    const temps = data.map(d => d.temperature_c);
-    const humidities = data.map(d => d.humidity_percent);
-    const colors = ['#2E86C1','#27AE60','#E67E22','#8E44AD','#E74C3C'];
+    const cities = weatherData.map(d => d.city);
+    const temps = weatherData.map(d => d.temperature_c);
+    const humidities = weatherData.map(d => d.humidity_percent);
 
-    // Temperature chart
     new Chart(document.getElementById('tempChart'), {
       type: 'bar',
       data: {
         labels: cities,
-        datasets: [{
-          label: 'Temperature (°C)',
-          data: temps,
-          backgroundColor: colors,
-          borderRadius: 6,
-        }]
+        datasets: [{ data: temps, backgroundColor: COLORS, borderRadius: 6 }]
       },
-      options: {
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: false } }
-      }
+      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false } } }
     });
 
-    // Humidity chart
     new Chart(document.getElementById('humidityChart'), {
       type: 'bar',
       data: {
         labels: cities,
+        datasets: [{ data: humidities, backgroundColor: COLORS, borderRadius: 6 }]
+      },
+      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false, max: 100 } } }
+    });
+  }
+
+  // ── CITY SELECTOR ──
+  function buildCitySelector() {
+    const sel = document.getElementById('city-selector');
+    sel.innerHTML = '';
+    weatherData.forEach((d, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'city-btn' + (i === 0 ? ' active' : '');
+      btn.textContent = d.city;
+      btn.onclick = () => selectCity(d.city, btn);
+      sel.appendChild(btn);
+    });
+    selectCity(weatherData[0].city, sel.querySelector('.city-btn'));
+  }
+
+  function goToCity(city) {
+    // Switch to City Details tab
+    document.querySelectorAll('.tab-page').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('tab-details').classList.add('active');
+    document.querySelectorAll('.nav-item')[1].classList.add('active');
+
+    // Select the city
+    const btns = document.querySelectorAll('.city-btn');
+    btns.forEach(b => { if (b.textContent === city) selectCity(city, b); });
+  }
+
+  function selectCity(city, btn) {
+    document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const d = weatherData.find(x => x.city === city);
+    if (!d) return;
+
+    // Stat boxes
+    document.getElementById('city-stat-boxes').innerHTML = `
+      <div class="stat-box">
+        <div class="label">Temperature</div>
+        <div class="value">${d.temperature_c.toFixed(1)}<span class="unit">°C</span></div>
+        <div class="sub">${d.weather_condition}</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Humidity</div>
+        <div class="value">${d.humidity_percent}<span class="unit">%</span></div>
+        <div class="sub">Relative humidity</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Wind Speed</div>
+        <div class="value">${d.wind_speed_ms}<span class="unit"> m/s</span></div>
+        <div class="sub">${(d.wind_speed_ms * 3.6).toFixed(1)} km/h</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Last Updated</div>
+        <div class="value" style="font-size:18px;">${d.timestamp.split(' ')[1]}</div>
+        <div class="sub">${d.timestamp.split(' ')[0]}</div>
+      </div>`;
+
+    // Destroy old charts
+    if (cityDetailCharts.tempHum) cityDetailCharts.tempHum.destroy();
+    if (cityDetailCharts.wind) cityDetailCharts.wind.destroy();
+
+    // Temp vs Humidity doughnut
+    cityDetailCharts.tempHum = new Chart(document.getElementById('cityTempHumChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Temperature (°C)', 'Humidity (%)'],
         datasets: [{
-          label: 'Humidity (%)',
-          data: humidities,
-          backgroundColor: colors,
-          borderRadius: 6,
+          data: [d.temperature_c.toFixed(1), d.humidity_percent],
+          backgroundColor: ['#2E86C1', '#27AE60'],
+          borderWidth: 0
         }]
       },
-      options: {
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: false, max: 100 } }
-      }
+      options: { plugins: { legend: { position: 'bottom' } }, cutout: '65%' }
+    });
+
+    // Wind gauge bar
+    cityDetailCharts.wind = new Chart(document.getElementById('cityWindChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Wind Speed (m/s)', 'Wind Speed (km/h)'],
+        datasets: [{
+          data: [d.wind_speed_ms, (d.wind_speed_ms * 3.6).toFixed(1)],
+          backgroundColor: ['#E67E22', '#8E44AD'],
+          borderRadius: 6
+        }]
+      },
+      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+    });
+  }
+
+  // ── COMPARISON ──
+  function buildComparison() {
+    const cities = weatherData.map(d => d.city);
+    const winds = weatherData.map(d => d.wind_speed_ms);
+    const temps = weatherData.map(d => d.temperature_c);
+    const hums = weatherData.map(d => d.humidity_percent);
+
+    new Chart(document.getElementById('windChart'), {
+      type: 'bar',
+      data: {
+        labels: cities,
+        datasets: [{ data: winds, backgroundColor: COLORS, borderRadius: 6 }]
+      },
+      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+    });
+
+    new Chart(document.getElementById('tempHumidOverlayChart'), {
+      type: 'bar',
+      data: {
+        labels: cities,
+        datasets: [
+          { label: 'Temperature (°C)', data: temps, backgroundColor: '#2E86C1', borderRadius: 4 },
+          { label: 'Humidity (%)', data: hums, backgroundColor: '#27AE60', borderRadius: 4 }
+        ]
+      },
+      options: { plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: false } } }
+    });
+
+    // Table
+    const tbody = document.getElementById('data-table');
+    tbody.innerHTML = '';
+    const sorted = [...weatherData].sort((a, b) => b.temperature_c - a.temperature_c);
+    sorted.forEach((d, i) => {
+      tbody.innerHTML += `
+        <tr>
+          <td class="rank">${i + 1}</td>
+          <td><strong>${d.city}</strong></td>
+          <td>${d.temperature_c.toFixed(1)}°C</td>
+          <td>${d.humidity_percent}%</td>
+          <td>${d.wind_speed_ms} m/s</td>
+          <td style="text-transform:capitalize">${d.weather_condition}</td>
+          <td>${d.timestamp}</td>
+        </tr>`;
     });
   }
 
   loadData();
 </script>
-
 </body>
 </html>
