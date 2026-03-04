@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Weather Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #1a2b3c; }
+
+    .header {
+      background: #1e2d42;
+      color: white;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 { font-size: 22px; font-weight: 700; }
+    .header .subtitle { font-size: 13px; color: #6b8aaa; margin-top: 4px; }
+    .badge {
+      background: rgba(46,134,193,0.2);
+      color: #5bb8f5;
+      border: 1px solid rgba(46,134,193,0.4);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .card .city { font-size: 12px; font-weight: 700; color: #2E86C1; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .card .temp { font-size: 28px; font-weight: 700; color: #1a2b3c; }
+    .card .unit { font-size: 14px; color: #95a5a6; }
+    .card .condition { font-size: 11px; color: #7f8c8d; margin-top: 6px; text-transform: capitalize; }
+    .card .humidity { font-size: 11px; color: #95a5a6; margin-top: 4px; }
+
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .chart-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .chart-card h3 { font-size: 14px; font-weight: 600; color: #1a2b3c; margin-bottom: 16px; }
+
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #95a5a6;
+      padding: 16px;
+    }
+
+    .timestamp { font-size: 11px; color: #95a5a6; margin-top: 2px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>🌦️ Live Weather Dashboard</h1>
+    <div class="subtitle">Powered by AWS Lambda · S3 · Glue ETL · RDS PostgreSQL</div>
+  </div>
+  <div class="badge" id="last-updated">Loading...</div>
+</div>
+
+<div class="container">
+
+  <!-- CITY CARDS -->
+  <div class="cards" id="city-cards"></div>
+
+  <!-- CHARTS -->
+  <div class="charts">
+    <div class="chart-card">
+      <h3>Temperature by City (°C)</h3>
+      <canvas id="tempChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Humidity by City (%)</h3>
+      <canvas id="humidityChart"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Data refreshes daily at 08:00 UTC via automated AWS pipeline &nbsp;·&nbsp; Built by Jawad Mohammad
+</div>
+
+<script>
+  async function loadData() {
+    const res = await fetch('/weather/latest');
+    const data = await res.json();
+
+    // Update timestamp badge
+    const ts = data[0]?.timestamp || '';
+    document.getElementById('last-updated').textContent = 'Last updated: ' + ts;
+
+    // City cards
+    const cardsEl = document.getElementById('city-cards');
+    cardsEl.innerHTML = '';
+    data.forEach(d => {
+      cardsEl.innerHTML += `
+        <div class="card">
+          <div class="city">${d.city}</div>
+          <div class="temp">${d.temperature_c.toFixed(1)}<span class="unit">°C</span></div>
+          <div class="condition">${d.weather_condition}</div>
+          <div class="humidity">💧 ${d.humidity_percent}% humidity</div>
+        </div>`;
+    });
+
+    const cities = data.map(d => d.city);
+    const temps = data.map(d => d.temperature_c);
+    const humidities = data.map(d => d.humidity_percent);
+    const colors = ['#2E86C1','#27AE60','#E67E22','#8E44AD','#E74C3C'];
+
+    // Temperature chart
+    new Chart(document.getElementById('tempChart'), {
+      type: 'bar',
+      data: {
+        labels: cities,
+        datasets: [{
+          label: 'Temperature (°C)',
+          data: temps,
+          backgroundColor: colors,
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: false } }
+      }
+    });
+
+    // Humidity chart
+    new Chart(document.getElementById('humidityChart'), {
+      type: 'bar',
+      data: {
+        labels: cities,
+        datasets: [{
+          label: 'Humidity (%)',
+          data: humidities,
+          backgroundColor: colors,
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: false, max: 100 } }
+      }
+    });
+  }
+
+  loadData();
+</script>
+
+</body>
+</html>
