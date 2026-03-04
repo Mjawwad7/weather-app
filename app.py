@@ -6,10 +6,10 @@ app = Flask(__name__)
 
 def get_db_connection():
     conn = psycopg2.connect(
-        host=os.environ.get('weather-db.ctwkc0uagqj2.us-east-2.rds.amazonaws.com'),
-        database=os.environ.get('postgres'),
-        user=os.environ.get('postgres'),
-        password=os.environ.get('GAz6TXy6mPY3dAq'),
+        host=os.environ.get('DB_HOST'),
+        database=os.environ.get('DB_NAME'),
+        user=os.environ.get('DB_USER'),
+        password=os.environ.get('DB_PASSWORD'),
         port=5432
     )
     return conn
@@ -72,4 +72,5 @@ def get_latest():
     return jsonify(data)
 
 if __name__ == '__main__':
+
     app.run(debug=True)
