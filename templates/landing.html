@@ -1172,8 +1172,8 @@
           <span>easydatahq.com</span>
         </div>
         <div class="contact-detail">
-          <div class="icon">📍</div>
-          <span>Working with clients worldwide</span>
+          <div class="icon">🌏</div>
+          <span>Working with businesses worldwide</span>
         </div>
       </div>
 
@@ -1208,7 +1208,7 @@
           <textarea id="message" placeholder="Describe your data situation and what you're trying to achieve..."></textarea>
         </div>
         <button class="btn-submit" onclick="handleSubmit()">Send Message →</button>
-        <div class="form-success" id="form-success">✓ Message sent! We'll be in touch within 1 business day.</div>
+        <div class="form-success" id="form-success">✓ Message sent! We will be in touch shortly.</div>
       </div>
     </div>
   </div>
@@ -1251,23 +1251,32 @@
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
   // Form handler
-  function handleSubmit() {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+async function handleSubmit() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  const company = document.getElementById('company').value;
+  const situation = document.getElementById('situation').value;
 
-    if (!name || !email || !message) {
-      alert('Please fill in the required fields.');
-      return;
-    }
+  if (!name || !email || !message) {
+    alert('Please fill in the required fields.');
+    return;
+  }
 
-    // Show success message
+  const response = await fetch('https://formspree.io/f/myknyplo', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, company, situation, message })
+  });
+
+  if (response.ok) {
     document.querySelector('.btn-submit').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
-
-    // In production, replace this with your form backend (Formspree, EmailJS, etc.)
-    console.log('Form submitted:', { name, email, message });
+  } else {
+    alert('Something went wrong. Please try again.');
   }
+}
+  
 </script>
 
 </body>
