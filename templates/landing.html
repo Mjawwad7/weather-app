@@ -53,6 +53,16 @@
       font-size: 20px;
       color: var(--white);
       letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
     }
 
     .logo span { color: var(--accent); }
@@ -158,9 +168,11 @@
       font-size: clamp(38px, 4.5vw, 58px);
       font-weight: 800;
       color: var(--white);
-      line-height: 1.1;
+      line-height: 1.25;
       letter-spacing: -1px;
       margin-bottom: 22px;
+      overflow: visible;
+      padding-bottom: 4px;
     }
 
     .hero h1 em {
@@ -339,7 +351,7 @@
 
     .table-row {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
       padding: 8px 12px;
       font-size: 10px;
       border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -365,8 +377,8 @@
 
     /* ── STATS STRIP ── */
     .stats-strip {
-      background: var(--grey-light);
-      padding: 32px 5%;
+      background: var(--white);
+      padding: 40px 5%;
       border-top: 1px solid var(--grey-mid);
       border-bottom: 1px solid var(--grey-mid);
     }
@@ -383,21 +395,34 @@
 
     .stat-item {
       text-align: center;
+      padding: 0 20px;
     }
 
     .stat-item .num {
       font-family: 'Syne', sans-serif;
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 800;
       color: var(--navy);
+      line-height: 1.2;
+      letter-spacing: -1px;
+      overflow: visible;
+      padding-bottom: 2px;
     }
 
-    .stat-item .num span { color: var(--blue); }
+    .stat-item .num span { color: var(--accent); }
 
     .stat-item .desc {
-      font-size: 13px;
+      font-size: 12.5px;
+      font-weight: 500;
       color: var(--text-mid);
-      margin-top: 2px;
+      margin-top: 6px;
+      letter-spacing: 0.1px;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 48px;
+      background: var(--grey-mid);
     }
 
     /* ── SECTIONS ── */
@@ -425,9 +450,11 @@
       font-size: clamp(28px, 3.5vw, 42px);
       font-weight: 800;
       color: var(--navy);
-      line-height: 1.15;
+      line-height: 1.25;
       letter-spacing: -0.5px;
       margin-bottom: 16px;
+      overflow: visible;
+      padding-bottom: 4px;
     }
 
     .section-sub {
@@ -547,6 +574,9 @@
       font-weight: 700;
       color: var(--navy);
       margin-bottom: 10px;
+      line-height: 1.3;
+      overflow: visible;
+      padding-bottom: 2px;
     }
 
     .feature-card p {
@@ -605,6 +635,9 @@
       font-weight: 700;
       color: var(--navy);
       margin-bottom: 10px;
+      line-height: 1.3;
+      overflow: visible;
+      padding-bottom: 2px;
     }
 
     .step p {
@@ -886,7 +919,21 @@
 
 <!-- NAVBAR -->
 <nav>
-  <div class="logo">Easy<span>Data</span>HQ</div>
+<div class="logo">
+    <svg class="logo-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="8" fill="#00d4aa" opacity="0.15"/>
+      <rect x="1" y="1" width="32" height="32" rx="7" stroke="#00d4aa" stroke-width="1.5" opacity="0.4"/>
+      <!-- Database cylinder -->
+      <ellipse cx="17" cy="10" rx="7" ry="2.5" fill="#00d4aa" opacity="0.9"/>
+      <rect x="10" y="10" width="14" height="7" fill="#00d4aa" opacity="0.5"/>
+      <ellipse cx="17" cy="17" rx="7" ry="2.5" fill="#00d4aa" opacity="0.9"/>
+      <rect x="10" y="17" width="14" height="5" fill="#00d4aa" opacity="0.3"/>
+      <ellipse cx="17" cy="22" rx="7" ry="2.5" fill="#00d4aa" opacity="0.85"/>
+      <!-- Arrow -->
+      <path d="M22 26 L26 26 M24 24 L26 26 L24 28" stroke="#5bb8f5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Easy<span>Data</span>HQ
+  </div>
   <ul class="nav-links">
     <li><a href="#problem">The Problem</a></li>
     <li><a href="#features">What We Build</a></li>
@@ -902,7 +949,7 @@
     <div class="hero-content">
       <div class="hero-badge">Now accepting new clients</div>
       <h1>Your data.<br><em>One place.</em><br>Always live.</h1>
-      <p>We take your business data, build a proper database behind it, and deliver a clean web application where you and your team can see everything updated automatically.</p>
+      <p>We take your business data, build a proper database behind it, and deliver a clean web application where you and your team can see everything — updated automatically, no spreadsheets required.</p>
       <div class="hero-buttons">
         <a href="#contact" class="btn-primary">Get In Touch →</a>
         <a href="#demo" class="btn-secondary">See Live Demo</a>
@@ -951,19 +998,23 @@
           </div>
           <div class="mockup-table">
             <div class="table-row header">
-              <span>Client</span><span>Value</span><span>Status</span>
+              <span>City</span><span>Temp °C</span><span>Humidity</span><span>Status</span>
             </div>
             <div class="table-row data">
-              <span>Acme Corp</span><span>$12,400</span>
-              <span><span class="status-dot" style="background:#00d4aa"></span>Active</span>
+              <span>New York</span><span>18.4</span><span>62%</span>
+              <span><span class="status-dot" style="background:#00d4aa"></span>Live</span>
             </div>
             <div class="table-row data">
-              <span>TechStart Inc</span><span>$8,200</span>
-              <span><span class="status-dot" style="background:#00d4aa"></span>Active</span>
+              <span>London</span><span>11.2</span><span>78%</span>
+              <span><span class="status-dot" style="background:#00d4aa"></span>Live</span>
             </div>
             <div class="table-row data">
-              <span>GreenLeaf Co</span><span>$5,900</span>
-              <span><span class="status-dot" style="background:#ffbd2e"></span>Review</span>
+              <span>Dubai</span><span>34.7</span><span>41%</span>
+              <span><span class="status-dot" style="background:#ffbd2e"></span>Sync</span>
+            </div>
+            <div class="table-row data">
+              <span>Tokyo</span><span>22.1</span><span>55%</span>
+              <span><span class="status-dot" style="background:#00d4aa"></span>Live</span>
             </div>
           </div>
         </div>
@@ -979,14 +1030,17 @@
       <div class="num">100<span>%</span></div>
       <div class="desc">Automated. Zero manual steps</div>
     </div>
+    <div class="stat-divider"></div>
     <div class="stat-item fade-up">
-      <div class="num">A<span>→</span>Z</div>
+      <div class="num">A<span>→Z</span></div>
       <div class="desc">Full pipeline, source to dashboard</div>
     </div>
+    <div class="stat-divider"></div>
     <div class="stat-item fade-up">
       <div class="num">1<span> App</span></div>
       <div class="desc">Everything your team needs, one place</div>
     </div>
+    <div class="stat-divider"></div>
     <div class="stat-item fade-up">
       <div class="num">Any<span> Cloud</span></div>
       <div class="desc">AWS, GCP, Azure... we work with all</div>
@@ -1000,7 +1054,7 @@
     <div class="fade-up">
       <span class="section-tag">The Problem</span>
       <h2 class="section-title">Your data is scattered.<br>Your team is guessing.</h2>
-      <p class="section-sub">Most growing businesses run on spreadsheets, disconnected tools, and outdated reports. We fix that permanently.</p>
+      <p class="section-sub">Most growing businesses run on spreadsheets, disconnected tools, and outdated reports. We fix that — permanently.</p>
     </div>
 
     <div class="before-after">
@@ -1013,7 +1067,7 @@
           </div>
           <div class="ba-item">
             <div class="ba-icon x">✕</div>
-            <span>Reports updated manually, always a few days behind reality</span>
+            <span>Reports updated manually — always a few days behind reality</span>
           </div>
           <div class="ba-item">
             <div class="ba-icon x">✕</div>
@@ -1039,7 +1093,7 @@
           </div>
           <div class="ba-item">
             <div class="ba-icon check">✓</div>
-            <span>Automated pipelines keep everything current. No manual updates</span>
+            <span>Automated pipelines keep everything current — no manual updates</span>
           </div>
           <div class="ba-item">
             <div class="ba-icon check">✓</div>
@@ -1051,7 +1105,7 @@
           </div>
           <div class="ba-item">
             <div class="ba-icon check">✓</div>
-            <span>Your time back. We handle the entire technical side end to end</span>
+            <span>Your time back — we handle the entire technical side end to end</span>
           </div>
         </div>
       </div>
@@ -1065,29 +1119,29 @@
     <div class="fade-up" style="text-align:center">
       <span class="section-tag">What We Build</span>
       <h2 class="section-title" style="margin:0 auto">Everything. End to end.</h2>
-      <p class="section-sub" style="margin:0 auto;text-align:center">We handle the full stack. From structuring your database to deploying the web app your team logs into every day.</p>
+      <p class="section-sub" style="margin:0 auto;text-align:center">We handle the full stack — from structuring your database to deploying the web app your team logs into every day.</p>
     </div>
 
     <div class="features-grid">
       <div class="feature-card fade-up">
         <div class="feature-icon">🗄️</div>
         <h3>Database Architecture</h3>
-        <p>We design and build a proper PostgreSQL database tailored to your business, structured for accuracy, performance, and scale from day one.</p>
+        <p>We design and build a proper PostgreSQL database tailored to your business — structured for accuracy, performance, and scale from day one.</p>
       </div>
       <div class="feature-card fade-up">
         <div class="feature-icon">⚡</div>
         <h3>Automated Data Pipelines</h3>
-        <p>Your data flows automatically from its source into the database on a schedule. No manual imports, no stale reports, always current.</p>
+        <p>Your data flows automatically from its source into the database on a schedule. No manual imports, no stale reports — always current.</p>
       </div>
       <div class="feature-card fade-up">
         <div class="feature-icon">📊</div>
         <h3>Custom Web Application</h3>
-        <p>A clean, fast web app built specifically for your team. Charts, tables, filters designed around the decisions you need to make.</p>
+        <p>A clean, fast web app built specifically for your team. Charts, tables, filters — designed around the decisions you need to make.</p>
       </div>
       <div class="feature-card fade-up">
         <div class="feature-icon">☁️</div>
         <h3>Cloud Infrastructure</h3>
-        <p>We deploy everything on secure cloud infrastructure. Reliable, scalable, and maintained so you never have to think about it.</p>
+        <p>We deploy everything on secure cloud infrastructure — AWS, GCP, or Azure. Reliable, scalable, and maintained so you never have to think about it.</p>
       </div>
       <div class="feature-card fade-up">
         <div class="feature-icon">🔒</div>
@@ -1109,24 +1163,24 @@
     <div class="fade-up" style="text-align:center">
       <span class="section-tag">How It Works</span>
       <h2 class="section-title" style="margin:0 auto">Up and running in days,<br>not months.</h2>
-      <p class="section-sub" style="margin:0 auto;text-align:center">We handle the heavy lifting. You just tell us what you need, we take it from there.</p>
+      <p class="section-sub" style="margin:0 auto;text-align:center">We handle the heavy lifting. You just tell us what you need — we take it from there.</p>
     </div>
 
     <div class="steps">
       <div class="step fade-up">
         <div class="step-num">1</div>
         <h3>Tell Us About Your Data</h3>
-        <p>You share your data sources spreadsheets, existing software, or databases. Tell us how you want the front end to be.</p>
+        <p>You share your data sources — spreadsheets, existing software, APIs, or databases. We assess the situation and design a solution around your exact needs.</p>
       </div>
       <div class="step fade-up">
         <div class="step-num">2</div>
         <h3>We Build Everything</h3>
-        <p>We build the automated pipelines and develop your custom web application based on your recommendation.</p>
+        <p>We set up the database, build the automated pipelines, and develop your custom web application. You get regular updates throughout the process.</p>
       </div>
       <div class="step fade-up">
         <div class="step-num">3</div>
         <h3>Your Team Goes Live</h3>
-        <p>We maintain your new fully working system. Your team gets access to the web application which runs automatically.</p>
+        <p>We hand over a fully working system. Your team logs in, sees their data, and from that point forward everything runs automatically.</p>
       </div>
     </div>
   </div>
@@ -1137,18 +1191,122 @@
   <div class="demo-inner">
     <span class="section-tag">Live Demo</span>
     <h2 class="section-title">See it in action.</h2>
-    <p class="section-sub">This is a real, fully automated pipeline we built. Live weather data pulled daily, transformed, stored in a cloud database, and displayed here. Built end to end, zero manual steps.</p>
+    <p class="section-sub">This is a real, fully automated pipeline we built — live weather data pulled daily from an API, transformed, stored in a cloud database, and displayed here. Built end to end, zero manual steps.</p>
 
     <div class="demo-frame fade-up">
       <div class="demo-bar">
         <div class="demo-dots"><span></span><span></span><span></span></div>
-        <div class="demo-url-bar">https://easydatahq.com/dashboard. Live Weather Pipeline Demo</div>
+        <div class="demo-url-bar">https://easydatahq.com/dashboard — Live Weather Pipeline Demo</div>
       </div>
-      <iframe
-        src="/dashboard"
-        style="width:100%;height:500px;border:none;display:block;"
-        title="Live Dashboard Demo">
-      </iframe>
+      <!-- Static dashboard mockup replacing iframe -->
+      <div style="background:#0f1e2e;padding:24px;font-family:'Inter',sans-serif;">
+        <!-- Top stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;">
+          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Avg Temperature</div>
+            <div style="font-size:24px;font-weight:800;color:#00d4aa;font-family:'Syne',sans-serif;">21.6°C</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Across all cities</div>
+          </div>
+          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Cities Tracked</div>
+            <div style="font-size:24px;font-weight:800;color:#ffffff;font-family:'Syne',sans-serif;">8</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Updated daily</div>
+          </div>
+          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Avg Humidity</div>
+            <div style="font-size:24px;font-weight:800;color:#5bb8f5;font-family:'Syne',sans-serif;">61%</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Global average</div>
+          </div>
+          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
+            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Pipeline Status</div>
+            <div style="font-size:24px;font-weight:800;color:#00d4aa;font-family:'Syne',sans-serif;">Live</div>
+            <div style="font-size:10px;color:#00d4aa;margin-top:4px;">● Auto-updating</div>
+          </div>
+        </div>
+
+        <!-- Chart + Table row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <!-- Bar chart -->
+          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:14px;font-weight:600;">Temperature by City (°C)</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:80px;">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:60%;"></div>
+                <span style="font-size:8px;color:rgba(255,255,255,0.35);">NYC</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:38%;"></div>
+                <span style="font-size:8px;color:rgba(255,255,255,0.35);">LON</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:100%;background:#00d4aa;border-radius:3px 3px 0 0;height:95%;"></div>
+                <span style="font-size:8px;color:rgba(255,255,255,0.35);">DXB</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:70%;"></div>
+                <span style="font-size:8px;color:rgba(255,255,255,0.35);">TYO</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:50%;"></div>
+                <span style="font-size:8px;color:rgba(255,255,255,0.35);">PAR</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:82%;"></div>
+                <span style="font-size:8px;color:rgba(255,255,255,0.35);">SYD</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:44%;"></div>
+                <span style="font-size:8px;color:rgba(255,255,255,0.35);">TOR</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:65%;"></div>
+                <span style="font-size:8px;color:rgba(255,255,255,0.35);">SGP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data table -->
+          <div style="background:#1a2e42;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);">
+            <div style="padding:12px 16px;font-size:11px;color:rgba(255,255,255,0.5);font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Latest Readings</div>
+            <table style="width:100%;border-collapse:collapse;font-size:11px;">
+              <thead>
+                <tr style="background:rgba(255,255,255,0.03);">
+                  <th style="padding:8px 12px;text-align:left;color:rgba(255,255,255,0.3);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">City</th>
+                  <th style="padding:8px 12px;text-align:left;color:rgba(255,255,255,0.3);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Temp</th>
+                  <th style="padding:8px 12px;text-align:left;color:rgba(255,255,255,0.3);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Humidity</th>
+                  <th style="padding:8px 12px;text-align:left;color:rgba(255,255,255,0.3);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Condition</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.75);">New York</td>
+                  <td style="padding:8px 12px;color:#00d4aa;font-weight:600;">18.4°C</td>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.55);">62%</td>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.55);">Cloudy</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.75);">London</td>
+                  <td style="padding:8px 12px;color:#5bb8f5;font-weight:600;">11.2°C</td>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.55);">78%</td>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.55);">Rain</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.75);">Dubai</td>
+                  <td style="padding:8px 12px;color:#ffbd2e;font-weight:600;">34.7°C</td>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.55);">41%</td>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.55);">Sunny</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.75);">Tokyo</td>
+                  <td style="padding:8px 12px;color:#00d4aa;font-weight:600;">22.1°C</td>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.55);">55%</td>
+                  <td style="padding:8px 12px;color:rgba(255,255,255,0.55);">Clear</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <a href="/dashboard" target="_blank" class="demo-link">Open full dashboard ↗</a>
@@ -1162,18 +1320,18 @@
       <div class="contact-info fade-up">
         <span class="section-tag">Get In Touch</span>
         <h2 class="section-title">Let's talk about<br>your data.</h2>
-        <p>Tell us what you're working with. Whether it's messy spreadsheets, a system that doesn't talk to another, or data you can't easily visualize. We will get back to you with a clear plan.</p>
+        <p>Tell us what you're working with — whether it's messy spreadsheets, a system that doesn't talk to another, or data you can't easily see. We'll come back with a clear plan.</p>
         <div class="contact-detail">
           <div class="icon">📧</div>
-          <span>jawwad.agr@gmail.com</span>
+          <a href="/cdn-cgi/l/email-protection#5832392f2f393c76393f2a183f35393134763b3735" style="color:var(--text-mid);text-decoration:none;" onmouseover="this.style.color='var(--blue)'" onmouseout="this.style.color='var(--text-mid)'"><span class="__cf_email__" data-cfemail="3a505b4d4d5b5e145b5d487a5d575b535614595557">[email&#160;protected]</span></a>
         </div>
         <div class="contact-detail">
           <div class="icon">🌐</div>
           <span>easydatahq.com</span>
         </div>
         <div class="contact-detail">
-          <div class="icon">🌏</div>
-          <span>Working with businesses worldwide</span>
+          <div class="icon">📍</div>
+          <span>Boston, MA — Working with clients worldwide</span>
         </div>
       </div>
 
@@ -1208,7 +1366,7 @@
           <textarea id="message" placeholder="Describe your data situation and what you're trying to achieve..."></textarea>
         </div>
         <button class="btn-submit" onclick="handleSubmit()">Send Message →</button>
-        <div class="form-success" id="form-success">✓ Message sent! We will be in touch shortly.</div>
+        <div class="form-success" id="form-success">✓ Message sent! We'll be in touch within 1 business day.</div>
       </div>
     </div>
   </div>
@@ -1235,7 +1393,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Scroll animations
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -1251,33 +1409,7 @@
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
   // Form handler
-async function handleSubmit() {
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const message = document.getElementById('message').value;
-  const company = document.getElementById('company').value;
-  const situation = document.getElementById('situation').value;
-
-  if (!name || !email || !message) {
-    alert('Please fill in the required fields.');
-    return;
-  }
-
-  const response = await fetch('https://formspree.io/f/myknyplo', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, company, situation, message })
-  });
-
-  if (response.ok) {
-    document.querySelector('.btn-submit').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
-  } else {
-    alert('Something went wrong. Please try again.');
-  }
-}
-  
-</script>
-
-</body>
-</html>
+  function handleSubmit() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementBy
