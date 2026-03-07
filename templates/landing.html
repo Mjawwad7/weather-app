@@ -7,35 +7,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy: #0f1e2e;
-      --navy-mid: #1a2e42;
-      --navy-light: #1e3a52;
-      --blue: #2e86c1;
-      --blue-light: #5bb8f5;
-      --accent: #00d4aa;
-      --white: #ffffff;
-      --grey-light: #f4f7fa;
-      --grey-mid: #e2eaf2;
-      --text-dark: #0f1e2e;
-      --text-mid: #4a6278;
+      --navy: #0f1e2e; --navy-mid: #1a2e42; --navy-light: #1e3a52;
+      --blue: #2e86c1; --blue-light: #5bb8f5; --accent: #00d4aa;
+      --white: #ffffff; --grey-light: #f4f7fa; --grey-mid: #e2eaf2;
+      --text-dark: #0f1e2e; --text-mid: #4a6278;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
-
-    /* NAVBAR */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 0 5%; height: 68px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(15,30,46,0.97); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .logo {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
-      color: var(--white); letter-spacing: -0.3px;
-      display: flex; align-items: center; gap: 10px; text-decoration: none;
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 5%; height: 68px; display: flex; align-items: center; justify-content: space-between; background: rgba(15,30,46,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--white); letter-spacing: -0.3px; display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .logo span { color: var(--accent); }
     .logo-icon { width: 34px; height: 34px; flex-shrink: 0; }
     .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
@@ -43,80 +24,25 @@
     .nav-links a:hover { color: var(--white); }
     .nav-cta { background: var(--accent); color: var(--navy) !important; font-weight: 700 !important; padding: 9px 20px; border-radius: 8px; transition: opacity 0.2s !important; }
     .nav-cta:hover { opacity: 0.88; }
-
-    /* HERO */
-    .hero {
-      min-height: 100vh; background: var(--navy);
-      display: flex; align-items: center; padding: 100px 5% 80px;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; top: -200px; right: -200px;
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(46,134,193,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero::after {
-      content: ''; position: absolute; bottom: -100px; left: -100px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(0,212,170,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-inner {
-      max-width: 1200px; margin: 0 auto; width: 100%;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.25);
-      color: var(--accent); font-size: 12px; font-weight: 600;
-      padding: 6px 14px; border-radius: 20px; margin-bottom: 24px; letter-spacing: 0.3px;
-    }
-    .hero-badge::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent); animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-    .hero h1 {
-      font-family: 'Syne', sans-serif; font-size: clamp(38px, 4.5vw, 58px);
-      font-weight: 800; color: var(--white); line-height: 1.25;
-      letter-spacing: -1px; margin-bottom: 22px; padding-bottom: 4px;
-    }
+    .hero { min-height: 100vh; background: var(--navy); display: flex; align-items: center; padding: 100px 5% 80px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(46,134,193,0.12) 0%, transparent 70%); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; bottom: -100px; left: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,212,170,0.07) 0%, transparent 70%); pointer-events: none; }
+    .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.25); color: var(--accent); font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 20px; margin-bottom: 24px; letter-spacing: 0.3px; }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(38px, 4.5vw, 58px); font-weight: 800; color: var(--white); line-height: 1.25; letter-spacing: -1px; margin-bottom: 22px; padding-bottom: 4px; }
     .hero h1 em { font-style: normal; color: var(--accent); }
     .hero p { font-size: 17px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 36px; max-width: 480px; }
     .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--accent); color: var(--navy); font-weight: 700; font-size: 14px;
-      padding: 14px 28px; border-radius: 10px; text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(0,212,170,0.3);
-    }
+    .btn-primary { background: var(--accent); color: var(--navy); font-weight: 700; font-size: 14px; padding: 14px 28px; border-radius: 10px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(0,212,170,0.3); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,170,0.4); }
-    .btn-secondary {
-      background: rgba(255,255,255,0.07); color: var(--white); font-weight: 600;
-      font-size: 14px; padding: 14px 28px; border-radius: 10px; text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.12); transition: background 0.2s;
-    }
+    .btn-secondary { background: rgba(255,255,255,0.07); color: var(--white); font-weight: 600; font-size: 14px; padding: 14px 28px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(255,255,255,0.12); transition: background 0.2s; }
     .btn-secondary:hover { background: rgba(255,255,255,0.12); }
-
-    /* HERO MOCKUP */
     .hero-visual { position: relative; }
-    .dashboard-mockup {
-      background: #1a2e42; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08); overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.5); animation: float 6s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    .mockup-bar {
-      background: #0f1e2e; padding: 12px 16px;
-      display: flex; align-items: center; gap: 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
+    .dashboard-mockup { background: #1a2e42; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    .mockup-bar { background: #0f1e2e; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .mockup-dots { display: flex; gap: 6px; }
     .mockup-dots span { width: 10px; height: 10px; border-radius: 50%; }
     .mockup-dots span:nth-child(1) { background: #ff5f57; }
@@ -139,8 +65,6 @@
     .table-row.header { color: rgba(255,255,255,0.3); font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; }
     .table-row.data { color: rgba(255,255,255,0.7); }
     .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; }
-
-    /* STATS STRIP */
     .stats-strip { background: var(--white); padding: 40px 5%; border-top: 1px solid var(--grey-mid); border-bottom: 1px solid var(--grey-mid); }
     .stats-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 24px; }
     .stat-item { text-align: center; padding: 0 20px; }
@@ -148,15 +72,11 @@
     .stat-item .num span { color: var(--accent); }
     .stat-item .desc { font-size: 12.5px; font-weight: 500; color: var(--text-mid); margin-top: 6px; }
     .stat-divider { width: 1px; height: 48px; background: var(--grey-mid); }
-
-    /* SHARED */
     section { padding: 96px 5%; }
     .section-inner { max-width: 1200px; margin: 0 auto; }
     .section-tag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--blue); margin-bottom: 14px; }
     .section-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 800; color: var(--navy); line-height: 1.25; letter-spacing: -0.5px; margin-bottom: 16px; padding-bottom: 4px; }
     .section-sub { font-size: 16px; color: var(--text-mid); line-height: 1.7; max-width: 560px; }
-
-    /* BEFORE/AFTER */
     #problem { background: var(--white); }
     .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 52px; }
     .ba-card { border-radius: 16px; overflow: hidden; border: 1px solid var(--grey-mid); }
@@ -169,8 +89,6 @@
     .ba-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
     .ba-icon.x { background: #fde8e8; color: #e74c3c; }
     .ba-icon.check { background: #e6f9f3; color: #1a7a56; }
-
-    /* FEATURES */
     #features { background: var(--grey-light); }
     .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 52px; }
     .feature-card { background: var(--white); border-radius: 16px; padding: 32px 28px; border: 1px solid var(--grey-mid); transition: transform 0.2s, box-shadow 0.2s; }
@@ -178,8 +96,6 @@
     .feature-icon { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--navy), var(--navy-light)); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; }
     .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.3; padding-bottom: 2px; }
     .feature-card p { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
-
-    /* HOW IT WORKS */
     #how { background: var(--white); }
     .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; margin-top: 52px; position: relative; }
     .steps::before { content: ''; position: absolute; top: 32px; left: calc(16.66% + 16px); right: calc(16.66% + 16px); height: 2px; background: linear-gradient(90deg, var(--blue), var(--accent)); z-index: 0; }
@@ -187,8 +103,6 @@
     .step-num { width: 64px; height: 64px; border-radius: 50%; background: var(--navy); color: var(--white); font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; border: 4px solid var(--white); box-shadow: 0 0 0 2px var(--blue); }
     .step h3 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.3; padding-bottom: 2px; }
     .step p { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
-
-    /* DEMO */
     #demo { background: var(--navy); }
     .demo-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
     #demo .section-tag { color: var(--accent); }
@@ -204,8 +118,6 @@
     .demo-url-bar { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.45); font-size: 12px; padding: 5px 14px; border-radius: 6px; flex: 1; text-align: left; }
     .demo-link { display: inline-block; margin-top: 28px; color: var(--accent); font-weight: 600; font-size: 14px; text-decoration: none; border-bottom: 1px solid rgba(0,212,170,0.3); padding-bottom: 2px; transition: border-color 0.2s; }
     .demo-link:hover { border-color: var(--accent); }
-
-    /* CONTACT */
     #contact { background: var(--grey-light); }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 52px; }
     .contact-info p { font-size: 15px; color: var(--text-mid); line-height: 1.7; margin-bottom: 28px; }
@@ -223,8 +135,6 @@
     .btn-submit { width: 100%; background: var(--navy); color: white; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; padding: 14px; border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s, transform 0.2s; margin-top: 4px; }
     .btn-submit:hover { background: var(--navy-light); transform: translateY(-1px); }
     .form-success { display: none; text-align: center; padding: 20px; color: #1a7a56; font-weight: 600; font-size: 15px; }
-
-    /* FOOTER */
     footer { background: var(--navy); padding: 40px 5%; border-top: 1px solid rgba(255,255,255,0.06); }
     .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
     .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); }
@@ -234,32 +144,20 @@
     .footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 13px; transition: color 0.2s; }
     .footer-links a:hover { color: var(--white); }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); text-align: right; }
-
-    /* ANIMATIONS */
     .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    /* RESPONSIVE */
     @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
-      .before-after { grid-template-columns: 1fr; }
-      .features-grid { grid-template-columns: 1fr 1fr; }
-      .steps { grid-template-columns: 1fr; }
-      .steps::before { display: none; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .form-row { grid-template-columns: 1fr; }
-      .stat-divider { display: none; }
+      .hero-inner { grid-template-columns: 1fr; } .hero-visual { display: none; }
+      .before-after { grid-template-columns: 1fr; } .features-grid { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr; } .steps::before { display: none; }
+      .contact-grid { grid-template-columns: 1fr; } .nav-links { display: none; }
+      .form-row { grid-template-columns: 1fr; } .stat-divider { display: none; }
     }
-    @media (max-width: 600px) {
-      .features-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav>
   <div class="logo">
     <svg class="logo-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -283,7 +181,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
@@ -303,21 +200,9 @@
         </div>
         <div class="mockup-body">
           <div class="mockup-stats">
-            <div class="mockup-stat">
-              <div class="label">Revenue</div>
-              <div class="value" style="color:#00d4aa">$84.2K</div>
-              <div class="change">&#8593; 12% this month</div>
-            </div>
-            <div class="mockup-stat">
-              <div class="label">Active Orders</div>
-              <div class="value">247</div>
-              <div class="change" style="color:#5bb8f5">&#8593; 8 today</div>
-            </div>
-            <div class="mockup-stat">
-              <div class="label">Clients</div>
-              <div class="value">1,340</div>
-              <div class="change">&#8593; 5 new</div>
-            </div>
+            <div class="mockup-stat"><div class="label">Revenue</div><div class="value" style="color:#00d4aa">$84.2K</div><div class="change">&#8593; 12% this month</div></div>
+            <div class="mockup-stat"><div class="label">Active Orders</div><div class="value">247</div><div class="change" style="color:#5bb8f5">&#8593; 8 today</div></div>
+            <div class="mockup-stat"><div class="label">Clients</div><div class="value">1,340</div><div class="change">&#8593; 5 new</div></div>
           </div>
           <div class="mockup-chart">
             <div class="chart-label">Monthly Revenue Trend</div>
@@ -334,25 +219,11 @@
             </div>
           </div>
           <div class="mockup-table">
-            <div class="table-row header">
-              <span>City</span><span>Temp</span><span>Humidity</span><span>Status</span>
-            </div>
-            <div class="table-row data">
-              <span>New York</span><span>18.4&#176;C</span><span>62%</span>
-              <span><span class="status-dot" style="background:#00d4aa"></span>Live</span>
-            </div>
-            <div class="table-row data">
-              <span>London</span><span>11.2&#176;C</span><span>78%</span>
-              <span><span class="status-dot" style="background:#00d4aa"></span>Live</span>
-            </div>
-            <div class="table-row data">
-              <span>Dubai</span><span>34.7&#176;C</span><span>41%</span>
-              <span><span class="status-dot" style="background:#ffbd2e"></span>Sync</span>
-            </div>
-            <div class="table-row data">
-              <span>Tokyo</span><span>22.1&#176;C</span><span>55%</span>
-              <span><span class="status-dot" style="background:#00d4aa"></span>Live</span>
-            </div>
+            <div class="table-row header"><span>City</span><span>Temp</span><span>Humidity</span><span>Status</span></div>
+            <div class="table-row data"><span>New York</span><span>3.1&#176;C</span><span>93%</span><span><span class="status-dot" style="background:#00d4aa"></span>Live</span></div>
+            <div class="table-row data"><span>Houston</span><span>21.6&#176;C</span><span>90%</span><span><span class="status-dot" style="background:#00d4aa"></span>Live</span></div>
+            <div class="table-row data"><span>Miami</span><span>22.6&#176;C</span><span>85%</span><span><span class="status-dot" style="background:#00d4aa"></span>Live</span></div>
+            <div class="table-row data"><span>Chicago</span><span>1.3&#176;C</span><span>89%</span><span><span class="status-dot" style="background:#00d4aa"></span>Live</span></div>
           </div>
         </div>
       </div>
@@ -360,32 +231,18 @@
   </div>
 </section>
 
-<!-- STATS STRIP -->
 <div class="stats-strip">
   <div class="stats-inner">
-    <div class="stat-item fade-up">
-      <div class="num">100<span>%</span></div>
-      <div class="desc">Automated. Zero manual steps</div>
-    </div>
+    <div class="stat-item fade-up"><div class="num">100<span>%</span></div><div class="desc">Automated. Zero manual steps</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item fade-up">
-      <div class="num">A<span>&#8594;Z</span></div>
-      <div class="desc">Full pipeline, source to dashboard</div>
-    </div>
+    <div class="stat-item fade-up"><div class="num">A<span>&#8594;Z</span></div><div class="desc">Full pipeline, source to dashboard</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item fade-up">
-      <div class="num">1<span> App</span></div>
-      <div class="desc">Everything your team needs, one place</div>
-    </div>
+    <div class="stat-item fade-up"><div class="num">1<span> App</span></div><div class="desc">Everything your team needs, one place</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item fade-up">
-      <div class="num">Any<span> Cloud</span></div>
-      <div class="desc">AWS, GCP, Azure... we work with all</div>
-    </div>
+    <div class="stat-item fade-up"><div class="num">Any<span> Cloud</span></div><div class="desc">AWS, GCP, Azure... we work with all</div></div>
   </div>
 </div>
 
-<!-- PROBLEM -->
 <section id="problem">
   <div class="section-inner">
     <div class="fade-up">
@@ -418,7 +275,6 @@
   </div>
 </section>
 
-<!-- FEATURES -->
 <section id="features">
   <div class="section-inner">
     <div class="fade-up" style="text-align:center">
@@ -427,41 +283,16 @@
       <p class="section-sub" style="margin:0 auto;text-align:center">We handle the full stack. From structuring your database to deploying the web app your team logs into every day.</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card fade-up">
-        <div class="feature-icon">&#128452;</div>
-        <h3>Database Architecture</h3>
-        <p>We design and build a proper PostgreSQL database tailored to your business, structured for accuracy, performance, and scale from day one.</p>
-      </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon">&#9889;</div>
-        <h3>Automated Data Pipelines</h3>
-        <p>Your data flows automatically from its source into the database on a schedule. No manual imports, no stale reports, always current.</p>
-      </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon">&#128202;</div>
-        <h3>Custom Web Application</h3>
-        <p>A clean, fast web app built specifically for your team. Charts, tables, filters designed around the decisions you need to make.</p>
-      </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon">&#9729;</div>
-        <h3>Cloud Infrastructure</h3>
-        <p>We deploy everything on secure cloud infrastructure. Reliable, scalable, and maintained so you never have to think about it.</p>
-      </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon">&#128274;</div>
-        <h3>Secure Access and Logins</h3>
-        <p>Role-based access so each team member sees exactly what they need. Your data stays private, secure, and accessible only to the right people.</p>
-      </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon">&#129309;</div>
-        <h3>Ongoing Support</h3>
-        <p>We don't disappear after launch. We stay on to maintain the system, add features, and make sure everything keeps running smoothly.</p>
-      </div>
+      <div class="feature-card fade-up"><div class="feature-icon">&#128452;</div><h3>Database Architecture</h3><p>We design and build a proper PostgreSQL database tailored to your business, structured for accuracy, performance, and scale from day one.</p></div>
+      <div class="feature-card fade-up"><div class="feature-icon">&#9889;</div><h3>Automated Data Pipelines</h3><p>Your data flows automatically from its source into the database on a schedule. No manual imports, no stale reports, always current.</p></div>
+      <div class="feature-card fade-up"><div class="feature-icon">&#128202;</div><h3>Custom Web Application</h3><p>A clean, fast web app built specifically for your team. Charts, tables, filters designed around the decisions you need to make.</p></div>
+      <div class="feature-card fade-up"><div class="feature-icon">&#9729;</div><h3>Cloud Infrastructure</h3><p>We deploy everything on secure cloud infrastructure. Reliable, scalable, and maintained so you never have to think about it.</p></div>
+      <div class="feature-card fade-up"><div class="feature-icon">&#128274;</div><h3>Secure Access and Logins</h3><p>Role-based access so each team member sees exactly what they need. Your data stays private, secure, and accessible only to the right people.</p></div>
+      <div class="feature-card fade-up"><div class="feature-icon">&#129309;</div><h3>Ongoing Support</h3><p>We don't disappear after launch. We stay on to maintain the system, add features, and make sure everything keeps running smoothly.</p></div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section id="how">
   <div class="section-inner">
     <div class="fade-up" style="text-align:center">
@@ -470,100 +301,149 @@
       <p class="section-sub" style="margin:0 auto;text-align:center">We handle the heavy lifting. You just tell us what you need, we take it from there.</p>
     </div>
     <div class="steps">
-      <div class="step fade-up">
-        <div class="step-num">1</div>
-        <h3>Tell Us About Your Data</h3>
-        <p>You share your data sources spreadsheets, existing software, or databases. Tell us how you want the front end to be.</p>
-      </div>
-      <div class="step fade-up">
-        <div class="step-num">2</div>
-        <h3>We Build Everything</h3>
-        <p>We build the automated pipelines and develop your custom web application based on your recommendation.</p>
-      </div>
-      <div class="step fade-up">
-        <div class="step-num">3</div>
-        <h3>Your Team Goes Live</h3>
-        <p>We maintain your new fully working system. Your team gets access to the web application which runs automatically.</p>
-      </div>
+      <div class="step fade-up"><div class="step-num">1</div><h3>Tell Us About Your Data</h3><p>You share your data sources spreadsheets, existing software, or databases. Tell us how you want the front end to be.</p></div>
+      <div class="step fade-up"><div class="step-num">2</div><h3>We Build Everything</h3><p>We build the automated pipelines and develop your custom web application based on your recommendation.</p></div>
+      <div class="step fade-up"><div class="step-num">3</div><h3>Your Team Goes Live</h3><p>We maintain your new fully working system. Your team gets access to the web application which runs automatically.</p></div>
     </div>
   </div>
 </section>
 
-<!-- LIVE DEMO -->
+<!-- LIVE DEMO — accurate replica of actual dashboard -->
 <section id="demo">
   <div class="demo-inner">
     <span class="section-tag">Live Demo</span>
     <h2 class="section-title">See it in action.</h2>
     <p class="section-sub">This is a real, fully automated pipeline we built. Live weather data pulled daily, transformed, stored in a cloud database, and displayed here. Built end to end, zero manual steps.</p>
+
     <div class="demo-frame fade-up">
       <div class="demo-bar">
         <div class="demo-dots"><span></span><span></span><span></span></div>
         <div class="demo-url-bar">https://easydatahq.com/dashboard &#8212; Live Weather Pipeline Demo</div>
       </div>
-      <div style="background:#0f1e2e;padding:24px;">
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;">
-          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
-            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Avg Temperature</div>
-            <div style="font-size:24px;font-weight:800;color:#00d4aa;font-family:'Syne',sans-serif;line-height:1.2;">21.6&#176;C</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Across all cities</div>
+
+      <div style="background:#f0f2f5;font-family:'Inter',sans-serif;">
+
+        <!-- Dark navy header matching the real one -->
+        <div style="background:#1b2a3b;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:#fff;">&#127781; Live Weather Dashboard</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Powered by AWS Lambda &middot; S3 &middot; Glue ETL &middot; RDS PostgreSQL</div>
           </div>
-          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
-            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Cities Tracked</div>
-            <div style="font-size:24px;font-weight:800;color:#ffffff;font-family:'Syne',sans-serif;line-height:1.2;">8</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Updated daily</div>
-          </div>
-          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
-            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Avg Humidity</div>
-            <div style="font-size:24px;font-weight:800;color:#5bb8f5;font-family:'Syne',sans-serif;line-height:1.2;">61%</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:4px;">Global average</div>
-          </div>
-          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
-            <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Pipeline Status</div>
-            <div style="font-size:24px;font-weight:800;color:#00d4aa;font-family:'Syne',sans-serif;line-height:1.2;">Live</div>
-            <div style="font-size:10px;color:#00d4aa;margin-top:4px;">&#9679; Auto-updating</div>
-          </div>
+          <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);font-size:10px;padding:5px 12px;border-radius:20px;">Last updated: 2026-03-06 08:00:20</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-          <div style="background:#1a2e42;border-radius:10px;padding:16px;border:1px solid rgba(255,255,255,0.07);">
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:14px;font-weight:600;">Temperature by City (&#176;C)</div>
-            <div style="display:flex;align-items:flex-end;gap:8px;height:80px;">
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:60%;"></div><span style="font-size:8px;color:rgba(255,255,255,0.35);">NYC</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:38%;"></div><span style="font-size:8px;color:rgba(255,255,255,0.35);">LON</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:100%;background:#00d4aa;border-radius:3px 3px 0 0;height:95%;"></div><span style="font-size:8px;color:rgba(255,255,255,0.35);">DXB</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:70%;"></div><span style="font-size:8px;color:rgba(255,255,255,0.35);">TYO</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:50%;"></div><span style="font-size:8px;color:rgba(255,255,255,0.35);">PAR</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:82%;"></div><span style="font-size:8px;color:rgba(255,255,255,0.35);">SYD</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:44%;"></div><span style="font-size:8px;color:rgba(255,255,255,0.35);">TOR</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:100%;background:#2e86c1;border-radius:3px 3px 0 0;height:65%;"></div><span style="font-size:8px;color:rgba(255,255,255,0.35);">SGP</span></div>
+
+        <!-- Tab bar -->
+        <div style="background:#fff;border-bottom:2px solid #e8edf2;padding:0 20px;display:flex;">
+          <button onclick="showTab('overview')" id="tab-overview"
+            style="padding:11px 18px;font-size:12px;font-weight:600;color:#2e86c1;border:none;background:none;border-bottom:2px solid #2e86c1;margin-bottom:-2px;cursor:pointer;font-family:'Inter',sans-serif;">
+            Overview
+          </button>
+          <button onclick="showTab('comparison')" id="tab-comparison"
+            style="padding:11px 18px;font-size:12px;font-weight:600;color:#999;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;font-family:'Inter',sans-serif;">
+            Comparison
+          </button>
+        </div>
+
+        <!-- OVERVIEW TAB -->
+        <div id="panel-overview" style="padding:18px;">
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px;">
+            <div style="background:#fff;border-radius:8px;padding:14px 10px;box-shadow:0 1px 3px rgba(0,0,0,0.07);text-align:center;">
+              <div style="font-size:9px;font-weight:700;color:#2e86c1;letter-spacing:0.8px;margin-bottom:6px;text-transform:uppercase;">Chicago</div>
+              <div style="font-size:20px;font-weight:700;color:#1b2a3b;line-height:1.1;">1.3<span style="font-size:11px;">&#176;C</span></div>
+              <div style="font-size:9px;color:#999;margin-top:4px;">Overcast Clouds</div>
+              <div style="font-size:9px;color:#2e86c1;margin-top:3px;">&#128167; 89%</div>
+            </div>
+            <div style="background:#fff;border-radius:8px;padding:14px 10px;box-shadow:0 1px 3px rgba(0,0,0,0.07);text-align:center;">
+              <div style="font-size:9px;font-weight:700;color:#2e86c1;letter-spacing:0.8px;margin-bottom:6px;text-transform:uppercase;">Houston</div>
+              <div style="font-size:20px;font-weight:700;color:#1b2a3b;line-height:1.1;">21.6<span style="font-size:11px;">&#176;C</span></div>
+              <div style="font-size:9px;color:#999;margin-top:4px;">Overcast Clouds</div>
+              <div style="font-size:9px;color:#2e86c1;margin-top:3px;">&#128167; 90%</div>
+            </div>
+            <div style="background:#fff;border-radius:8px;padding:14px 10px;box-shadow:0 1px 3px rgba(0,0,0,0.07);text-align:center;">
+              <div style="font-size:9px;font-weight:700;color:#2e86c1;letter-spacing:0.8px;margin-bottom:6px;text-transform:uppercase;">Los Angeles</div>
+              <div style="font-size:20px;font-weight:700;color:#1b2a3b;line-height:1.1;">14.7<span style="font-size:11px;">&#176;C</span></div>
+              <div style="font-size:9px;color:#999;margin-top:4px;">Clear Sky</div>
+              <div style="font-size:9px;color:#2e86c1;margin-top:3px;">&#128167; 86%</div>
+            </div>
+            <div style="background:#fff;border-radius:8px;padding:14px 10px;box-shadow:0 1px 3px rgba(0,0,0,0.07);text-align:center;">
+              <div style="font-size:9px;font-weight:700;color:#2e86c1;letter-spacing:0.8px;margin-bottom:6px;text-transform:uppercase;">Miami</div>
+              <div style="font-size:20px;font-weight:700;color:#1b2a3b;line-height:1.1;">22.6<span style="font-size:11px;">&#176;C</span></div>
+              <div style="font-size:9px;color:#999;margin-top:4px;">Few Clouds</div>
+              <div style="font-size:9px;color:#2e86c1;margin-top:3px;">&#128167; 85%</div>
+            </div>
+            <div style="background:#fff;border-radius:8px;padding:14px 10px;box-shadow:0 1px 3px rgba(0,0,0,0.07);text-align:center;">
+              <div style="font-size:9px;font-weight:700;color:#2e86c1;letter-spacing:0.8px;margin-bottom:6px;text-transform:uppercase;">New York</div>
+              <div style="font-size:20px;font-weight:700;color:#1b2a3b;line-height:1.1;">3.1<span style="font-size:11px;">&#176;C</span></div>
+              <div style="font-size:9px;color:#999;margin-top:4px;">Mist</div>
+              <div style="font-size:9px;color:#2e86c1;margin-top:3px;">&#128167; 93%</div>
             </div>
           </div>
-          <div style="background:#1a2e42;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);">
-            <div style="padding:12px 16px;font-size:11px;color:rgba(255,255,255,0.5);font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);">Latest Readings</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:#fff;border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
+              <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:12px;">Temperature by City (&#176;C)</div>
+              <div style="display:flex;align-items:flex-end;gap:8px;height:80px;">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4c8cdf;border-radius:2px 2px 0 0;height:6%;min-height:3px;"></div><span style="font-size:8px;color:#888;">Chicago</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4ab87a;border-radius:2px 2px 0 0;height:88%;"></div><span style="font-size:8px;color:#888;">Houston</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e8843a;border-radius:2px 2px 0 0;height:60%;"></div><span style="font-size:8px;color:#888;">LA</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#9b59b6;border-radius:2px 2px 0 0;height:92%;"></div><span style="font-size:8px;color:#888;">Miami</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e74c3c;border-radius:2px 2px 0 0;height:12%;min-height:3px;"></div><span style="font-size:8px;color:#888;">NY</span></div>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
+              <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:12px;">Humidity by City (%)</div>
+              <div style="display:flex;align-items:flex-end;gap:8px;height:80px;">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4c8cdf;border-radius:2px 2px 0 0;height:78%;"></div><span style="font-size:8px;color:#888;">Chicago</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4ab87a;border-radius:2px 2px 0 0;height:82%;"></div><span style="font-size:8px;color:#888;">Houston</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e8843a;border-radius:2px 2px 0 0;height:30%;"></div><span style="font-size:8px;color:#888;">LA</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#9b59b6;border-radius:2px 2px 0 0;height:22%;"></div><span style="font-size:8px;color:#888;">Miami</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e74c3c;border-radius:2px 2px 0 0;height:95%;"></div><span style="font-size:8px;color:#888;">NY</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;font-size:10px;color:#bbb;margin-top:12px;padding-bottom:4px;">Data refreshes daily at 08:00 UTC via automated AWS pipeline &middot; Built by Jawad Mohammad</div>
+        </div>
+
+        <!-- COMPARISON TAB -->
+        <div id="panel-comparison" style="padding:18px;display:none;">
+          <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.07);margin-bottom:14px;">
             <table style="width:100%;border-collapse:collapse;font-size:11px;">
               <thead>
-                <tr style="background:rgba(255,255,255,0.03);">
-                  <th style="padding:8px 12px;text-align:left;color:rgba(255,255,255,0.3);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">City</th>
-                  <th style="padding:8px 12px;text-align:left;color:rgba(255,255,255,0.3);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Temp</th>
-                  <th style="padding:8px 12px;text-align:left;color:rgba(255,255,255,0.3);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Humidity</th>
-                  <th style="padding:8px 12px;text-align:left;color:rgba(255,255,255,0.3);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Condition</th>
+                <tr style="background:#f8f9fa;border-bottom:2px solid #e8edf2;">
+                  <th style="padding:10px 14px;text-align:left;color:#666;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">City</th>
+                  <th style="padding:10px 14px;text-align:center;color:#666;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Temp (&#176;C)</th>
+                  <th style="padding:10px 14px;text-align:center;color:#666;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Humidity</th>
+                  <th style="padding:10px 14px;text-align:center;color:#666;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Wind (m/s)</th>
+                  <th style="padding:10px 14px;text-align:left;color:#666;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Condition</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td style="padding:8px 12px;color:rgba(255,255,255,0.75);">New York</td><td style="padding:8px 12px;color:#00d4aa;font-weight:600;">18.4&#176;C</td><td style="padding:8px 12px;color:rgba(255,255,255,0.55);">62%</td><td style="padding:8px 12px;color:rgba(255,255,255,0.55);">Cloudy</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td style="padding:8px 12px;color:rgba(255,255,255,0.75);">London</td><td style="padding:8px 12px;color:#5bb8f5;font-weight:600;">11.2&#176;C</td><td style="padding:8px 12px;color:rgba(255,255,255,0.55);">78%</td><td style="padding:8px 12px;color:rgba(255,255,255,0.55);">Rain</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.04);"><td style="padding:8px 12px;color:rgba(255,255,255,0.75);">Dubai</td><td style="padding:8px 12px;color:#ffbd2e;font-weight:600;">34.7&#176;C</td><td style="padding:8px 12px;color:rgba(255,255,255,0.55);">41%</td><td style="padding:8px 12px;color:rgba(255,255,255,0.55);">Sunny</td></tr>
-                <tr><td style="padding:8px 12px;color:rgba(255,255,255,0.75);">Tokyo</td><td style="padding:8px 12px;color:#00d4aa;font-weight:600;">22.1&#176;C</td><td style="padding:8px 12px;color:rgba(255,255,255,0.55);">55%</td><td style="padding:8px 12px;color:rgba(255,255,255,0.55);">Clear</td></tr>
+                <tr style="border-bottom:1px solid #f2f2f2;"><td style="padding:9px 14px;font-weight:600;color:#1b2a3b;">&#9679; Chicago</td><td style="padding:9px 14px;text-align:center;color:#4c8cdf;font-weight:700;">1.3</td><td style="padding:9px 14px;text-align:center;color:#555;">89%</td><td style="padding:9px 14px;text-align:center;color:#555;">4.6</td><td style="padding:9px 14px;color:#888;">Overcast Clouds</td></tr>
+                <tr style="border-bottom:1px solid #f2f2f2;background:#fafafa;"><td style="padding:9px 14px;font-weight:600;color:#1b2a3b;">&#9679; Houston</td><td style="padding:9px 14px;text-align:center;color:#4ab87a;font-weight:700;">21.6</td><td style="padding:9px 14px;text-align:center;color:#555;">90%</td><td style="padding:9px 14px;text-align:center;color:#555;">3.1</td><td style="padding:9px 14px;color:#888;">Overcast Clouds</td></tr>
+                <tr style="border-bottom:1px solid #f2f2f2;"><td style="padding:9px 14px;font-weight:600;color:#1b2a3b;">&#9679; Los Angeles</td><td style="padding:9px 14px;text-align:center;color:#e8843a;font-weight:700;">14.7</td><td style="padding:9px 14px;text-align:center;color:#555;">86%</td><td style="padding:9px 14px;text-align:center;color:#555;">2.5</td><td style="padding:9px 14px;color:#888;">Clear Sky</td></tr>
+                <tr style="border-bottom:1px solid #f2f2f2;background:#fafafa;"><td style="padding:9px 14px;font-weight:600;color:#1b2a3b;">&#9679; Miami</td><td style="padding:9px 14px;text-align:center;color:#9b59b6;font-weight:700;">22.6</td><td style="padding:9px 14px;text-align:center;color:#555;">85%</td><td style="padding:9px 14px;text-align:center;color:#555;">5.1</td><td style="padding:9px 14px;color:#888;">Few Clouds</td></tr>
+                <tr><td style="padding:9px 14px;font-weight:600;color:#1b2a3b;">&#9679; New York</td><td style="padding:9px 14px;text-align:center;color:#e74c3c;font-weight:700;">3.1</td><td style="padding:9px 14px;text-align:center;color:#555;">93%</td><td style="padding:9px 14px;text-align:center;color:#555;">6.2</td><td style="padding:9px 14px;color:#888;">Mist</td></tr>
               </tbody>
             </table>
           </div>
+          <div style="background:#fff;border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
+            <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:12px;">Wind Speed Comparison (m/s)</div>
+            <div style="display:flex;align-items:flex-end;gap:14px;height:70px;">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4c8cdf;border-radius:2px 2px 0 0;height:74%;"></div><span style="font-size:9px;color:#888;">Chicago</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4ab87a;border-radius:2px 2px 0 0;height:50%;"></div><span style="font-size:9px;color:#888;">Houston</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e8843a;border-radius:2px 2px 0 0;height:40%;"></div><span style="font-size:9px;color:#888;">LA</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#9b59b6;border-radius:2px 2px 0 0;height:82%;"></div><span style="font-size:9px;color:#888;">Miami</span></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e74c3c;border-radius:2px 2px 0 0;height:100%;"></div><span style="font-size:9px;color:#888;">NY</span></div>
+            </div>
+          </div>
+          <div style="text-align:center;font-size:10px;color:#bbb;margin-top:12px;padding-bottom:4px;">Data refreshes daily at 08:00 UTC via automated AWS pipeline &middot; Built by Jawad Mohammad</div>
         </div>
+
       </div>
     </div>
     <a href="/dashboard" target="_blank" class="demo-link">Open full dashboard &#8599;</a>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="section-inner">
     <div class="contact-grid">
@@ -571,34 +451,16 @@
         <span class="section-tag">Get In Touch</span>
         <h2 class="section-title">Let's talk about<br>your data.</h2>
         <p>Tell us what you're working with. Whether it's messy spreadsheets, a system that doesn't talk to another, or data you can't easily visualize. We will get back to you with a clear plan.</p>
-        <div class="contact-detail">
-          <div class="icon">&#128231;</div>
-          <a href="mailto:jawwad.agr@gmail.com">jawwad.agr@gmail.com</a>
-        </div>
-        <div class="contact-detail">
-          <div class="icon">&#127760;</div>
-          <span>easydatahq.com</span>
-        </div>
-        <div class="contact-detail">
-          <div class="icon">&#127759;</div>
-          <span>Working with businesses worldwide</span>
-        </div>
+        <div class="contact-detail"><div class="icon">&#128231;</div><a href="mailto:jawwad.agr@gmail.com">jawwad.agr@gmail.com</a></div>
+        <div class="contact-detail"><div class="icon">&#127760;</div><span>easydatahq.com</span></div>
+        <div class="contact-detail"><div class="icon">&#127759;</div><span>Working with businesses worldwide</span></div>
       </div>
       <div class="contact-form fade-up">
         <div class="form-row">
-          <div class="form-group">
-            <label>Full Name *</label>
-            <input type="text" id="name" placeholder="John Smith">
-          </div>
-          <div class="form-group">
-            <label>Email *</label>
-            <input type="email" id="email" placeholder="john@company.com">
-          </div>
+          <div class="form-group"><label>Full Name *</label><input type="text" id="name" placeholder="John Smith"></div>
+          <div class="form-group"><label>Email *</label><input type="email" id="email" placeholder="john@company.com"></div>
         </div>
-        <div class="form-group">
-          <label>Company / Organisation</label>
-          <input type="text" id="company" placeholder="Your company name">
-        </div>
+        <div class="form-group"><label>Company / Organisation</label><input type="text" id="company" placeholder="Your company name"></div>
         <div class="form-group">
           <label>What best describes your situation?</label>
           <select id="situation">
@@ -610,10 +472,7 @@
             <option>Something else</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Tell us more *</label>
-          <textarea id="message" placeholder="Describe your data situation and what you're trying to achieve..."></textarea>
-        </div>
+        <div class="form-group"><label>Tell us more *</label><textarea id="message" placeholder="Describe your data situation and what you're trying to achieve..."></textarea></div>
         <button class="btn-submit" onclick="handleSubmit()">Send Message &#8594;</button>
         <div class="form-success" id="form-success">&#10003; Message sent! We will be in touch shortly.</div>
       </div>
@@ -621,7 +480,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div>
@@ -635,9 +493,7 @@
       <a href="#demo">Live Demo</a>
       <a href="#contact">Contact</a>
     </div>
-    <div class="footer-copy">
-      &copy; 2026 EasyData HQ<br>Boston, MA &middot; Worldwide
-    </div>
+    <div class="footer-copy">&copy; 2026 EasyData HQ<br>Boston, MA &middot; Worldwide</div>
   </div>
 </footer>
 
@@ -652,16 +508,22 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+  function showTab(tab) {
+    document.getElementById('panel-overview').style.display = tab === 'overview' ? 'block' : 'none';
+    document.getElementById('panel-comparison').style.display = tab === 'comparison' ? 'block' : 'none';
+    document.getElementById('tab-overview').style.color = tab === 'overview' ? '#2e86c1' : '#999';
+    document.getElementById('tab-overview').style.borderBottom = tab === 'overview' ? '2px solid #2e86c1' : '2px solid transparent';
+    document.getElementById('tab-comparison').style.color = tab === 'comparison' ? '#2e86c1' : '#999';
+    document.getElementById('tab-comparison').style.borderBottom = tab === 'comparison' ? '2px solid #2e86c1' : '2px solid transparent';
+  }
+
   async function handleSubmit() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
     const company = document.getElementById('company').value;
     const situation = document.getElementById('situation').value;
-    if (!name || !email || !message) {
-      alert('Please fill in the required fields.');
-      return;
-    }
+    if (!name || !email || !message) { alert('Please fill in the required fields.'); return; }
     const response = await fetch('https://formspree.io/f/myknyplo', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
