@@ -380,24 +380,12 @@
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div style="background:#fff;border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
-              <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:12px;">Temperature by City (&#176;C)</div>
-              <div style="display:flex;align-items:flex-end;gap:8px;height:180px;">
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4c8cdf;border-radius:2px 2px 0 0;height:6px;min-height:3px;"></div><span style="font-size:8px;color:#888;">Chicago</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4ab87a;border-radius:2px 2px 0 0;height:88px;"></div><span style="font-size:8px;color:#888;">Houston</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e8843a;border-radius:2px 2px 0 0;height:60px;"></div><span style="font-size:8px;color:#888;">LA</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#9b59b6;border-radius:2px 2px 0 0;height:92px;"></div><span style="font-size:8px;color:#888;">Miami</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e74c3c;border-radius:2px 2px 0 0;height:12px;min-height:3px;"></div><span style="font-size:8px;color:#888;">NY</span></div>
-              </div>
+              <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:8px;">Temperature by City (&#176;C)</div>
+              <canvas id="tempChart"></canvas>
             </div>
             <div style="background:#fff;border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
-              <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:12px;">Humidity by City (%)</div>
-              <div style="display:flex;align-items:flex-end;gap:8px;height:180px;">
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4c8cdf;border-radius:2px 2px 0 0;height:78px;"></div><span style="font-size:8px;color:#888;">Chicago</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4ab87a;border-radius:2px 2px 0 0;height:82px;"></div><span style="font-size:8px;color:#888;">Houston</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e8843a;border-radius:2px 2px 0 0;height:30px;"></div><span style="font-size:8px;color:#888;">LA</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#9b59b6;border-radius:2px 2px 0 0;height:22px;"></div><span style="font-size:8px;color:#888;">Miami</span></div>
-                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e74c3c;border-radius:2px 2px 0 0;height:95px;"></div><span style="font-size:8px;color:#888;">NY</span></div>
-              </div>
+              <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:8px;">Humidity by City (%)</div>
+              <canvas id="humidChart"></canvas>
             </div>
           </div>
           <div style="text-align:center;font-size:10px;color:#bbb;margin-top:12px;padding-bottom:4px;">Data refreshes daily at 08:00 UTC via automated AWS pipeline &middot; Built by Jawad Mohammad</div>
@@ -426,13 +414,8 @@
             </table>
           </div>
           <div style="background:#fff;border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
-            <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:12px;">Wind Speed Comparison (m/s)</div>
-            <div style="display:flex;align-items:flex-end;gap:14px;height:70px;">
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4c8cdf;border-radius:2px 2px 0 0;height:74px;"></div><span style="font-size:9px;color:#888;">Chicago</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#4ab87a;border-radius:2px 2px 0 0;height:50px;"></div><span style="font-size:9px;color:#888;">Houston</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#e8843a;border-radius:2px 2px 0 0;height:40px;"></div><span style="font-size:9px;color:#888;">LA</span></div>
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:100%;background:#9b59b6;border-radius:2px 2px 0 0;height:82px;"></div><span style="font-size:9px;color:#888;">Miami</span></div>
-            </div>
+            <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:8px;">Wind Speed Comparison (m/s)</div>
+            <canvas id="windChart"></canvas>
           </div>
           <div style="text-align:center;font-size:10px;color:#bbb;margin-top:12px;padding-bottom:4px;">Data refreshes daily at 08:00 UTC via automated AWS pipeline &middot; Built by Jawad Mohammad</div>
         </div>
@@ -535,6 +518,49 @@
       alert('Something went wrong. Please try again.');
     }
   }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  const cities = ['Chicago', 'Houston', 'Los Angeles', 'Miami', 'New York'];
+  const colors = ['#4c8cdf', '#4ab87a', '#e8843a', '#9b59b6', '#e74c3c'];
+  const chartDefaults = {
+    type: 'bar',
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 10 } } }
+      }
+    }
+  };
+
+  new Chart(document.getElementById('tempChart'), {
+    ...chartDefaults,
+    data: {
+      labels: cities,
+      datasets: [{ data: [1.3, 21.6, 14.7, 22.6, 3.1], backgroundColor: colors, borderRadius: 4 }]
+    },
+    options: { ...chartDefaults.options, scales: { ...chartDefaults.options.scales, y: { ...chartDefaults.options.scales.y, ticks: { font: { size: 10 }, callback: v => v + '°C' } } } }
+  });
+
+  new Chart(document.getElementById('humidChart'), {
+    ...chartDefaults,
+    data: {
+      labels: cities,
+      datasets: [{ data: [89, 90, 86, 85, 93], backgroundColor: colors, borderRadius: 4 }]
+    },
+    options: { ...chartDefaults.options, scales: { ...chartDefaults.options.scales, y: { ...chartDefaults.options.scales.y, min: 80, ticks: { font: { size: 10 }, callback: v => v + '%' } } } }
+  });
+
+  new Chart(document.getElementById('windChart'), {
+    ...chartDefaults,
+    data: {
+      labels: cities,
+      datasets: [{ data: [4.6, 3.1, 2.5, 5.1, 6.2], backgroundColor: colors, borderRadius: 4 }]
+    },
+    options: { ...chartDefaults.options, scales: { ...chartDefaults.options.scales, y: { ...chartDefaults.options.scales.y, ticks: { font: { size: 10 }, callback: v => v + ' m/s' } } } }
+  });
 </script>
 </body>
 </html>
