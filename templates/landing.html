@@ -239,7 +239,7 @@
     <div class="stat-divider"></div>
     <div class="stat-item fade-up"><div class="num">1<span> App</span></div><div class="desc">Everything your team needs, one place</div></div>
     <div class="stat-divider"></div>
-    <div class="stat-item fade-up"><div class="num">Any<span> Cloud</span></div><div class="desc">AWS, GCP, Azure... we work with all</div></div>
+    <div class="stat-item fade-up"><div class="num">Any<span> Cloud</span></div><div class="desc">AWS, GCP, Azure. We work with all!</div></div>
   </div>
 </div>
 
@@ -301,8 +301,8 @@
       <p class="section-sub" style="margin:0 auto;text-align:center">We handle the heavy lifting. You just tell us what you need, we take it from there.</p>
     </div>
     <div class="steps">
-      <div class="step fade-up"><div class="step-num">1</div><h3>Tell Us About Your Data</h3><p>You share your data sources spreadsheets, existing software, or databases. Tell us how you want the front end to be.</p></div>
-      <div class="step fade-up"><div class="step-num">2</div><h3>We Build Everything</h3><p>We build the automated pipelines and develop your custom web application based on your recommendation.</p></div>
+      <div class="step fade-up"><div class="step-num">1</div><h3>Tell Us About Your Data</h3><p>You share your data sources, existing software, or databases. Tell us how you want the interface to look like.</p></div>
+      <div class="step fade-up"><div class="step-num">2</div><h3>We Build Everything</h3><p>We build the automated pipelines and develop your custom web application based on your requirement.</p></div>
       <div class="step fade-up"><div class="step-num">3</div><h3>Your Team Goes Live</h3><p>We maintain your new fully working system. Your team gets access to the web application which runs automatically.</p></div>
     </div>
   </div>
@@ -505,7 +505,7 @@
     const message = document.getElementById('message').value;
     const company = document.getElementById('company').value;
     const situation = document.getElementById('situation').value;
-    if (!name || !email || !message) { alert('Please fill in the required fields.'); return; }
+    if (!name || !email) { alert('Please fill in the required fields.'); return; }
     const response = await fetch('https://formspree.io/f/myknyplo', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
