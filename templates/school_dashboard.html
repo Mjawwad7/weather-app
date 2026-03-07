@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maple Street School — EasyData Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --sidebar-bg: #0f1117;
+    --sidebar-width: 240px;
+    --accent: #4f8ef7;
+    --accent-green: #34d399;
+    --accent-red: #f87171;
+    --accent-amber: #fbbf24;
+    --accent-purple: #a78bfa;
+    --surface: #ffffff;
+    --surface2: #f8f9fc;
+    --border: #e8ecf4;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --sidebar-text: #a0aec0;
+    --sidebar-active: #ffffff;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface2);
+    color: var(--text-primary);
+    display: flex;
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    min-height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  .sidebar-brand {
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .brand-icon {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .brand-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+  }
+
+  .brand-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  .sidebar-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 20px 20px 8px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: var(--sidebar-text);
+    cursor: pointer;
+    border-radius: 0;
+    transition: all 0.15s;
+    font-size: 13.5px;
+    font-weight: 500;
+    position: relative;
+    border-left: 3px solid transparent;
+    margin: 1px 0;
+  }
+
+  .nav-item:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+  .nav-item.active {
+    color: var(--sidebar-active);
+    background: rgba(79,142,247,0.12);
+    border-left-color: var(--accent);
+  }
+
+  .nav-icon { font-size: 15px; width: 18px; text-align: center; }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .powered-by {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .powered-dot {
+    width: 6px; height: 6px;
+    background: var(--accent-green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+  }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0;
+    z-index: 50;
+  }
+
+  .topbar-left h1 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+
+  .topbar-left p {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .filter-group select {
+    border: none;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .badge-live {
+    background: rgba(52,211,153,0.12);
+    color: #059669;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: flex; align-items: center; gap: 5px;
+  }
+
+  .badge-live::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #059669;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    padding: 24px 28px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── KPI CARDS ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .kpi-card {
+    background: #ffffff;
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  .kpi-card.blue::before  { background: var(--accent); }
+  .kpi-card.green::before { background: var(--accent-green); }
+  .kpi-card.red::before   { background: var(--accent-red); }
+  .kpi-card.amber::before { background: var(--accent-amber); }
+  .kpi-card.purple::before{ background: var(--accent-purple); }
+
+  .kpi-label {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    font-family: 'DM Mono', monospace;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .kpi-icon {
+    position: absolute;
+    top: 18px; right: 18px;
+    font-size: 22px;
+    opacity: 0.15;
+  }
+
+  /* ── CHARTS & PANELS ── */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .charts-grid.three { grid-template-columns: 2fr 1fr; }
+
+  .panel {
+    background: #ffffff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+  }
+
+  .panel-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .panel-tag {
+    font-size: 11px;
+    background: var(--surface2);
+    color: var(--text-secondary);
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .panel-body { padding: 20px; }
+
+  .chart-wrap {
+    position: relative;
+    height: 220px;
+  }
+
+  /* ── STAT ROWS ── */
+  .stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-row:last-child { border-bottom: none; }
+
+  .stat-row-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-primary);
+  }
+
+  .stat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  .stat-row-values {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: right;
+  }
+
+  .stat-amount {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .stat-pct {
+    font-size: 11px;
+    color: var(--text-muted);
+    min-width: 40px;
+  }
+
+  /* ── PROGRESS BARS ── */
+  .progress-bar-wrap { margin: 6px 0; }
+
+  .progress-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s ease;
+  }
+
+  /* ── TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .data-table th {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+
+  .data-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-primary);
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--surface2); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .badge-paid    { background: rgba(52,211,153,0.12); color: #059669; }
+  .badge-pending { background: rgba(251,191,36,0.12);  color: #b45309; }
+  .badge-late    { background: rgba(248,113,113,0.12); color: #dc2626; }
+  .badge-partial { background: rgba(167,139,250,0.12); color: #7c3aed; }
+
+  /* ── HIERARCHY ROWS ── */
+  .hier-section { margin-bottom: 8px; }
+
+  .hier-parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border-radius: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+  }
+
+  .hier-parent-label {
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--text-primary);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .hier-parent-amount {
+    font-family: 'DM Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+
+  .hier-children {
+    padding-left: 20px;
+  }
+
+  .hier-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 16px;
+    border-left: 2px solid var(--border);
+    margin: 2px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .hier-child:hover { background: var(--surface2); }
+
+  .hier-child-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .hier-child-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* ── FULL WIDTH ── */
+  .full-width { grid-column: 1 / -1; }
+
+  /* ── SUMMARY NUMBERS ROW ── */
+  .numbers-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .number-cell {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .number-cell-val {
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+  }
+
+  .number-cell-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .text-green { color: #059669 !important; }
+  .text-red   { color: #dc2626 !important; }
+  .text-amber { color: #b45309 !important; }
+  .text-blue  { color: var(--accent) !important; }
+  .text-mono  { font-family: 'DM Mono', monospace; }
+  .text-right { text-align: right; }
+
+  .section-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-logo">
+      <div class="brand-icon">🏫</div>
+      <div>
+        <div class="brand-name">Maple Street School</div>
+      </div>
+    </div>
+    <div class="brand-sub">* This name and data are fabricated for confidentiality purposes and do not represent any real school or institution.</div>
+  </div>
+
+  <div class="sidebar-section-label">Dashboard</div>
+  <div class="nav-item active" onclick="showSection('overview', this)">
+    <span class="nav-icon">📊</span> Overview
+  </div>
+
+  <div class="sidebar-section-label">Financials</div>
+  <div class="nav-item" onclick="showSection('revenue', this)">
+    <span class="nav-icon">💰</span> Revenue Breakdown
+  </div>
+  <div class="nav-item" onclick="showSection('expenses', this)">
+    <span class="nav-icon">📉</span> Expenses Breakdown
+  </div>
+
+  <div class="sidebar-section-label">Operations</div>
+  <div class="nav-item" onclick="showSection('fees', this)">
+    <span class="nav-icon">🧾</span> Fee Collection
+  </div>
+  <div class="nav-item" onclick="showSection('staff', this)">
+    <span class="nav-icon">👥</span> Staff & Attendance
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="powered-by">
+      <div class="powered-dot"></div>
+      Powered by EasyData HQ
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<main class="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1 id="page-title">School Overview</h1>
+      <p>Boston, MA · Academic Years 2023 – 2024</p>
+    </div>
+    <div class="topbar-right">
+      <div class="filter-group">
+        📅
+        <select id="year-filter" onchange="filterYear()">
+          <option value="all">All Years (2023–2024)</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+        </select>
+      </div>
+      <div class="badge-live">AWS Live Pipeline</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══════════════ OVERVIEW ═══════════════ -->
+    <section class="section active" id="sec-overview">
+
+      <!-- KPI CARDS -->
+      <div class="kpi-grid">
+        <div class="kpi-card blue">
+          <div class="kpi-icon">💵</div>
+          <div class="kpi-label">Total Revenue</div>
+          <div class="kpi-value" id="kpi-revenue">$0</div>
+          <div class="kpi-sub">Fees + Events combined</div>
+        </div>
+        <div class="kpi-card red">
+          <div class="kpi-icon">📤</div>
+          <div class="kpi-label">Total Expenses</div>
+          <div class="kpi-value" id="kpi-expenses">$0</div>
+          <div class="kpi-sub">All operational costs</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-icon">📈</div>
+          <div class="kpi-label">Net Profit</div>
+          <div class="kpi-value" id="kpi-profit">$0</div>
+          <div class="kpi-sub" id="kpi-margin">Profit margin</div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-icon">⏳</div>
+          <div class="kpi-label">Outstanding Fees</div>
+          <div class="kpi-value" id="kpi-outstanding">$0</div>
+          <div class="kpi-sub">Pending + partial payments</div>
+        </div>
+      </div>
+
+      <!-- NUMBERS STRIP -->
+      <div class="numbers-strip">
+        <div class="number-cell">
+          <div class="number-cell-val text-blue">500</div>
+          <div class="number-cell-label">Students Enrolled</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val">37</div>
+          <div class="number-cell-label">Total Staff</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val">16</div>
+          <div class="number-cell-label">Teachers</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val text-amber" id="num-pending">—</div>
+          <div class="number-cell-label">Pending Payments</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val text-green" id="num-collection-rate">—</div>
+          <div class="number-cell-label">Collection Rate</div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div class="charts-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Monthly Revenue vs Expenses</div>
+              <div class="panel-subtitle">12-month financial trend</div>
+            </div>
+            <span class="panel-tag" id="pnl-year-tag">All Years</span>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap"><canvas id="pnlChart"></canvas></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Expense Breakdown</div>
+              <div class="panel-subtitle">Where the money goes</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap"><canvas id="expenseDonut"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM ROW -->
+      <div class="charts-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Fee Collection by Grade</div>
+            <span class="panel-tag">Collection Rate %</span>
+          </div>
+          <div class="panel-body">
+            <div id="grade-bars"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Payment Status Split</div>
+            <div class="panel-subtitle">All months combined</div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap"><canvas id="statusDonut"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ REVENUE BREAKDOWN ═══════════════ -->
+    <section class="section" id="sec-revenue">
+      <div class="kpi-grid" style="grid-template-columns: repeat(3,1fr)">
+        <div class="kpi-card blue">
+          <div class="kpi-icon">🎓</div>
+          <div class="kpi-label">Tuition Revenue</div>
+          <div class="kpi-value" id="rev-tuition">$0</div>
+          <div class="kpi-sub">Student fees collected</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-icon">🎪</div>
+          <div class="kpi-label">Events Revenue</div>
+          <div class="kpi-value" id="rev-events">$0</div>
+          <div class="kpi-sub">Ticket & event income</div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-icon">💸</div>
+          <div class="kpi-label">Late Fees Collected</div>
+          <div class="kpi-value" id="rev-late">$0</div>
+          <div class="kpi-sub">From late payments</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Revenue Hierarchy</div>
+            <div class="panel-subtitle">Click to expand</div>
+          </div>
+          <div class="panel-body">
+            <div id="revenue-hierarchy"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Monthly Tuition Collected</div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap"><canvas id="tuitionBar"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Tuition Revenue by Grade</div>
+          <div class="panel-subtitle">Total collected per grade level</div>
+        </div>
+        <div class="panel-body">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Grade</th>
+                <th>Students</th>
+                <th>Monthly Fee</th>
+                <th>Total Billed</th>
+                <th>Total Collected</th>
+                <th>Outstanding</th>
+                <th>Collection Rate</th>
+              </tr>
+            </thead>
+            <tbody id="grade-revenue-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ EXPENSES BREAKDOWN ═══════════════ -->
+    <section class="section" id="sec-expenses">
+      <div class="kpi-grid">
+        <div class="kpi-card red">
+          <div class="kpi-icon">👩‍🏫</div>
+          <div class="kpi-label">Payroll</div>
+          <div class="kpi-value" id="exp-payroll">$0</div>
+          <div class="kpi-sub">All staff salaries</div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-icon">🔧</div>
+          <div class="kpi-label">Maintenance</div>
+          <div class="kpi-value" id="exp-maintenance">$0</div>
+          <div class="kpi-sub">Utilities, repairs, upkeep</div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-icon">📦</div>
+          <div class="kpi-label">Materials</div>
+          <div class="kpi-value" id="exp-materials">$0</div>
+          <div class="kpi-sub">Supplies & equipment</div>
+        </div>
+        <div class="kpi-card blue">
+          <div class="kpi-icon">🎭</div>
+          <div class="kpi-label">Events</div>
+          <div class="kpi-value" id="exp-events">$0</div>
+          <div class="kpi-sub">Extracurricular costs</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Expense Hierarchy</div>
+            <div class="panel-subtitle">All categories expanded</div>
+          </div>
+          <div class="panel-body">
+            <div id="expense-hierarchy"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Monthly Expense Trend</div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap"><canvas id="expTrendChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Top Spending Categories — Materials</div>
+          <div class="panel-subtitle">Purchase breakdown by category</div>
+        </div>
+        <div class="panel-body">
+          <div id="materials-bars"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ FEE COLLECTION ═══════════════ -->
+    <section class="section" id="sec-fees">
+      <div class="numbers-strip" style="grid-template-columns: repeat(4,1fr)">
+        <div class="number-cell">
+          <div class="number-cell-val text-blue" id="fee-total-billed">—</div>
+          <div class="number-cell-label">Total Billed</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val text-green" id="fee-total-collected">—</div>
+          <div class="number-cell-label">Collected</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val text-red" id="fee-total-outstanding">—</div>
+          <div class="number-cell-label">Outstanding</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val text-amber" id="fee-collection-rate">—</div>
+          <div class="number-cell-label">Collection Rate</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Payment Status by Grade</div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap"><canvas id="gradeStatusChart"></canvas></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Monthly Collection Rate</div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap"><canvas id="collectionRateChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Outstanding Payments — Top 20</div>
+          <div class="panel-subtitle">Students with pending or partial balances</div>
+        </div>
+        <div class="panel-body" style="padding:0">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Grade</th>
+                <th>Section</th>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Due</th>
+                <th>Paid</th>
+                <th>Outstanding</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="outstanding-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ STAFF & ATTENDANCE ═══════════════ -->
+    <section class="section" id="sec-staff">
+      <div class="numbers-strip">
+        <div class="number-cell">
+          <div class="number-cell-val">37</div>
+          <div class="number-cell-label">Total Staff</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val text-blue">16</div>
+          <div class="number-cell-label">Teachers</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val" id="staff-monthly-payroll">—</div>
+          <div class="number-cell-label">Monthly Payroll</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val text-amber" id="staff-avg-absent">—</div>
+          <div class="number-cell-label">Avg Days Off/Teacher/Mo</div>
+        </div>
+        <div class="number-cell">
+          <div class="number-cell-val text-green" id="staff-attendance-rate">—</div>
+          <div class="number-cell-label">Avg Attendance Rate</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Payroll Cost by Department</div>
+          </div>
+          <div class="panel-body">
+            <div id="staff-cost-rows"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Monthly Payroll Trend</div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap"><canvas id="payrollTrendChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Staff Roster & Estimated Monthly Cost</div>
+        </div>
+        <div class="panel-body" style="padding:0">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Pay Type</th>
+                <th>Rate</th>
+                <th>Est. Monthly Cost</th>
+                <th>Hire Date</th>
+              </tr>
+            </thead>
+            <tbody id="staff-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /content -->
+</main>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA — injected by Flask (fallback demo data)
+// ═══════════════════════════════════════════════
+const DATA = {
+  annual: {{ annual_kpis | tojson }},
+  monthly_pnl: {{ monthly_pnl | tojson }},
+  fee_by_grade: {{ fee_by_grade | tojson }},
+  outstanding: {{ outstanding | tojson }},
+  staff: {{ staff | tojson }},
+  staff_cost: {{ staff_cost | tojson }},
+  materials: {{ materials_by_cat | tojson }},
+  payroll_monthly: {{ payroll_monthly | tojson }}
+};
+
+// ═══════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const fmt = n => n === null || n === undefined ? '$0' :
+  '$' + Math.round(n).toLocaleString('en-US');
+const fmtK = n => n >= 1000000 ? '$' + (n/1000000).toFixed(1) + 'M'
+  : n >= 1000 ? '$' + Math.round(n/1000) + 'K' : fmt(n);
+const pct = n => (n || 0).toFixed(1) + '%';
+
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const COLORS = ['#4f8ef7','#34d399','#f87171','#fbbf24','#a78bfa','#fb923c','#38bdf8','#f472b6'];
+
+let activeYear = 'all';
+let charts = {};
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function showSection(name, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  $('sec-' + name).classList.add('active');
+  el.classList.add('active');
+  const titles = {
+    overview: 'School Overview',
+    revenue: 'Revenue Breakdown',
+    expenses: 'Expenses Breakdown',
+    fees: 'Fee Collection',
+    staff: 'Staff & Attendance'
+  };
+  $('page-title').textContent = titles[name];
+}
+
+function filterYear() {
+  activeYear = $('year-filter').value;
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════
+// FILTER DATA BY YEAR
+// ═══════════════════════════════════════════════
+function getAnnual() {
+  if (activeYear === 'all') {
+    const sum = field => DATA.annual.reduce((a,r) => a + (r[field]||0), 0);
+    return {
+      total_revenue_usd: sum('total_revenue_usd'),
+      total_expense_usd: sum('total_expense_usd'),
+      net_profit_usd: sum('net_profit_usd'),
+      profit_margin_pct: DATA.annual.length ?
+        DATA.annual.reduce((a,r) => a+(r.profit_margin_pct||0),0)/DATA.annual.length : 0,
+      payroll_usd: sum('payroll_usd'),
+      materials_usd: sum('materials_usd'),
+      maintenance_usd: sum('maintenance_usd'),
+      events_usd: sum('events_usd')
+    };
+  }
+  return DATA.annual.find(r => r.year == activeYear) || {};
+}
+
+function getPnl() {
+  if (activeYear === 'all') return DATA.monthly_pnl;
+  return DATA.monthly_pnl.filter(r => r.year == activeYear);
+}
+
+function getFeeByGrade() {
+  if (activeYear === 'all') {
+    const map = {};
+    DATA.fee_by_grade.forEach(r => {
+      if (!map[r.grade]) map[r.grade] = {...r};
+      else {
+        map[r.grade].total_billed_usd += r.total_billed_usd||0;
+        map[r.grade].total_collected_usd += r.total_collected_usd||0;
+        map[r.grade].total_outstanding_usd += r.total_outstanding_usd||0;
+        map[r.grade].pending_count += r.pending_count||0;
+        map[r.grade].partial_count += r.partial_count||0;
+        map[r.grade].late_count += r.late_count||0;
+      }
+    });
+    return Object.values(map).map(r => ({...r,
+      collection_rate_pct: r.total_billed_usd ?
+        100*r.total_collected_usd/r.total_billed_usd : 0
+    }));
+  }
+  return DATA.fee_by_grade.filter(r => r.year == activeYear);
+}
+
+// ═══════════════════════════════════════════════
+// RENDER ALL
+// ═══════════════════════════════════════════════
+function renderAll() {
+  const ann = getAnnual();
+  const pnl = getPnl();
+  const fbg = getFeeByGrade();
+
+  // KPI cards
+  $('kpi-revenue').textContent    = fmtK(ann.total_revenue_usd);
+  $('kpi-expenses').textContent   = fmtK(ann.total_expense_usd);
+  $('kpi-profit').textContent     = fmtK(ann.net_profit_usd);
+  $('kpi-profit').className       = 'kpi-value ' + (ann.net_profit_usd >= 0 ? 'text-green' : 'text-red');
+  $('kpi-margin').textContent     = pct(ann.profit_margin_pct) + ' margin';
+
+  // Outstanding fees
+  const totalOut = fbg.reduce((a,r) => a+(r.total_outstanding_usd||0), 0);
+  $('kpi-outstanding').textContent = fmtK(totalOut);
+
+  // Numbers strip
+  const pendingCount = DATA.outstanding.length;
+  $('num-pending').textContent = pendingCount;
+  const avgRate = fbg.length ? fbg.reduce((a,r) => a+(r.collection_rate_pct||0),0)/fbg.length : 0;
+  $('num-collection-rate').textContent = pct(avgRate);
+
+  renderPnlChart(pnl);
+  renderExpenseDonut(ann);
+  renderStatusDonut();
+  renderGradeBars(fbg);
+  renderRevenue(ann, pnl, fbg);
+  renderExpenses(ann, pnl);
+  renderFees(fbg);
+  renderStaff();
+}
+
+// ═══════════════════════════════════════════════
+// CHARTS
+// ═══════════════════════════════════════════════
+function makeChart(id, config) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart($(id), config);
+  return charts[id];
+}
+
+const baseFont = { family: 'DM Sans', size: 12 };
+const gridColor = '#f0f3f8';
+
+function renderPnlChart(pnl) {
+  const labels = pnl.map(r => MONTHS[(r.month||1)-1] + (activeYear==='all' ? ` '${String(r.year).slice(2)}` : ''));
+  makeChart('pnlChart', {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Revenue', data: pnl.map(r=>r.total_revenue_usd||0),
+          backgroundColor: 'rgba(79,142,247,0.15)', borderColor: '#4f8ef7',
+          borderWidth: 2, borderRadius: 4, type: 'bar' },
+        { label: 'Expenses', data: pnl.map(r=>r.total_expense_usd||0),
+          backgroundColor: 'rgba(248,113,113,0.1)', borderColor: '#f87171',
+          borderWidth: 2, borderRadius: 4, type: 'bar' },
+        { label: 'Net Profit', data: pnl.map(r=>r.net_profit_usd||0),
+          borderColor: '#34d399', borderWidth: 2.5, pointRadius: 3,
+          tension: 0.4, fill: false, type: 'line' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: baseFont, boxWidth: 12 } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: {size:11} } },
+        y: { grid: { color: gridColor }, ticks: {
+          callback: v => fmtK(v), font: {size:11}
+        }}
+      }
+    }
+  });
+  $('pnl-year-tag').textContent = activeYear === 'all' ? 'All Years' : activeYear;
+}
+
+function renderExpenseDonut(ann) {
+  makeChart('expenseDonut', {
+    type: 'doughnut',
+    data: {
+      labels: ['Payroll', 'Maintenance', 'Materials', 'Events'],
+      datasets: [{ data: [
+        ann.payroll_usd||0, ann.maintenance_usd||0,
+        ann.materials_usd||0, ann.events_usd||0
+      ], backgroundColor: ['#4f8ef7','#f87171','#a78bfa','#fbbf24'],
+        borderWidth: 0, hoverOffset: 6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '68%',
+      plugins: { legend: { position: 'bottom', labels: { font: baseFont, padding: 16, boxWidth: 10 } } }
+    }
+  });
+}
+
+function renderStatusDonut() {
+  const counts = {Paid:0, Paid_Late:0, Partial:0, Pending:0};
+  DATA.outstanding.forEach(r => { if (counts[r.status]!==undefined) counts[r.status]++; });
+  // approximate from total 12000 rows
+  const total = 12000;
+  const paid = Math.round(total * 0.80);
+  const late = Math.round(total * 0.12);
+  const partial = Math.round(total * 0.04);
+  const pending = total - paid - late - partial;
+  makeChart('statusDonut', {
+    type: 'doughnut',
+    data: {
+      labels: ['Paid', 'Paid Late', 'Partial', 'Pending'],
+      datasets: [{ data: [paid, late, partial, pending],
+        backgroundColor: ['#34d399','#fbbf24','#a78bfa','#f87171'],
+        borderWidth: 0, hoverOffset: 6 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '68%',
+      plugins: { legend: { position: 'bottom', labels: { font: baseFont, padding: 16, boxWidth: 10 } } }
+    }
+  });
+}
+
+function renderGradeBars(fbg) {
+  const gradeOrder = ['K','G1','G2','G3','G4','G5','G6'];
+  const sorted = gradeOrder.map(g => fbg.find(r=>r.grade===g)).filter(Boolean);
+  const html = sorted.map((r,i) => `
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-label">
+        <span>${r.grade === 'K' ? 'Kindergarten' : 'Grade ' + r.grade.replace('G','')}</span>
+        <span style="font-weight:600">${pct(r.collection_rate_pct)}</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:${r.collection_rate_pct||0}%;background:${COLORS[i]}"></div>
+      </div>
+    </div>`).join('');
+  $('grade-bars').innerHTML = html;
+}
+
+// ─── REVENUE SECTION ────────────────────────────
+function renderRevenue(ann, pnl, fbg) {
+  const gradeOrder = ['K','G1','G2','G3','G4','G5','G6'];
+  const fees = ['$800','$850','$850','$900','$900','$950','$950'];
+  const students = [70,75,75,75,70,70,65];
+
+  // KPI
+  const totalTuition = pnl.reduce((a,r)=>a+(r.fee_revenue_usd||0),0);
+  const totalEvents  = pnl.reduce((a,r)=>a+(r.events_revenue_usd||0),0);
+  const lateFees = totalTuition * 0.012; // approx
+  $('rev-tuition').textContent = fmtK(totalTuition);
+  $('rev-events').textContent  = fmtK(totalEvents);
+  $('rev-late').textContent    = fmtK(lateFees);
+
+  // hierarchy
+  const fbgMap = {};
+  fbg.forEach(r => fbgMap[r.grade] = r);
+  const hierHtml = `
+    <div class="hier-section">
+      <div class="hier-parent">
+        <div class="hier-parent-label">🎓 Tuition Fees</div>
+        <div class="hier-parent-amount">${fmtK(totalTuition)}</div>
+      </div>
+      <div class="hier-children">
+        ${gradeOrder.map((g,i) => {
+          const r = fbgMap[g] || {};
+          return `<div class="hier-child">
+            <div class="hier-child-label">
+              <span style="width:8px;height:8px;border-radius:50%;background:${COLORS[i]};display:inline-block"></span>
+              ${g==='K'?'Kindergarten':'Grade '+g.replace('G','')} (${students[i]} students · ${fees[i]}/mo)
+            </div>
+            <div class="hier-child-amount">${fmtK(r.total_collected_usd||0)}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="hier-section" style="margin-top:12px">
+      <div class="hier-parent">
+        <div class="hier-parent-label">🎪 Event Revenue</div>
+        <div class="hier-parent-amount">${fmtK(totalEvents)}</div>
+      </div>
+      <div class="hier-children">
+        <div class="hier-child">
+          <div class="hier-child-label">🎭 Performances & Exhibitions</div>
+          <div class="hier-child-amount">${fmtK(totalEvents * 0.45)}</div>
+        </div>
+        <div class="hier-child">
+          <div class="hier-child-label">🏃 Sports Days & Activities</div>
+          <div class="hier-child-amount">${fmtK(totalEvents * 0.35)}</div>
+        </div>
+        <div class="hier-child">
+          <div class="hier-child-label">📚 Book Fairs & Academic Events</div>
+          <div class="hier-child-amount">${fmtK(totalEvents * 0.20)}</div>
+        </div>
+      </div>
+    </div>`;
+  $('revenue-hierarchy').innerHTML = hierHtml;
+
+  // monthly bar chart
+  makeChart('tuitionBar', {
+    type: 'bar',
+    data: {
+      labels: pnl.map(r => MONTHS[(r.month||1)-1]),
+      datasets: [{
+        label: 'Tuition Collected',
+        data: pnl.map(r=>r.fee_revenue_usd||0),
+        backgroundColor: 'rgba(79,142,247,0.7)', borderRadius: 5, borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display:false }, ticks: { font:{size:11} } },
+        y: { grid: { color: gridColor }, ticks: { callback: v=>fmtK(v), font:{size:11} } }
+      }
+    }
+  });
+
+  // grade table
+  const rows = gradeOrder.map((g,i) => {
+    const r = fbgMap[g] || {total_billed_usd:0,total_collected_usd:0,total_outstanding_usd:0,collection_rate_pct:0};
+    const rate = r.collection_rate_pct || (r.total_billed_usd ? 100*r.total_collected_usd/r.total_billed_usd : 0);
+    const rateColor = rate >= 90 ? 'text-green' : rate >= 75 ? 'text-amber' : 'text-red';
+    return `<tr>
+      <td><span style="font-weight:600">${g==='K'?'Kindergarten':'Grade '+g.replace('G','')}</span></td>
+      <td>${students[i]}</td>
+      <td class="text-mono">${fees[i]}/mo</td>
+      <td class="text-mono">${fmtK(r.total_billed_usd)}</td>
+      <td class="text-mono text-green">${fmtK(r.total_collected_usd)}</td>
+      <td class="text-mono text-red">${fmtK(r.total_outstanding_usd)}</td>
+      <td><span class="${rateColor}" style="font-weight:600">${pct(rate)}</span></td>
+    </tr>`;
+  }).join('');
+  $('grade-revenue-table').innerHTML = rows;
+}
+
+// ─── EXPENSES SECTION ────────────────────────────
+function renderExpenses(ann, pnl) {
+  $('exp-payroll').textContent     = fmtK(ann.payroll_usd);
+  $('exp-maintenance').textContent = fmtK(ann.maintenance_usd);
+  $('exp-materials').textContent   = fmtK(ann.materials_usd);
+  $('exp-events').textContent      = fmtK(ann.events_usd);
+
+  // hierarchy
+  const cats = DATA.materials.filter(r => activeYear==='all' || r.year==activeYear);
+  const matBycat = {};
+  cats.forEach(r => { matBycat[r.category] = (matBycat[r.category]||0) + (r.total_spend_usd||0); });
+
+  $('expense-hierarchy').innerHTML = `
+    <div class="hier-section">
+      <div class="hier-parent">
+        <div class="hier-parent-label">👩‍🏫 Payroll</div>
+        <div class="hier-parent-amount">${fmtK(ann.payroll_usd)}</div>
+      </div>
+      <div class="hier-children">
+        ${[['Teachers (16)', 0.52],['Security & Domestic', 0.18],['Admin & Operations', 0.17],['Principal & Supervisor', 0.08],['Support Staff', 0.05]].map(([l,p]) => `
+          <div class="hier-child">
+            <div class="hier-child-label">${l}</div>
+            <div class="hier-child-amount">${fmtK((ann.payroll_usd||0)*p)}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="hier-section" style="margin-top:8px">
+      <div class="hier-parent">
+        <div class="hier-parent-label">🔧 Maintenance & Utilities</div>
+        <div class="hier-parent-amount">${fmtK(ann.maintenance_usd)}</div>
+      </div>
+      <div class="hier-children">
+        ${[['Utilities (Electricity, Water, Gas)', 0.42],['HVAC & Heating', 0.18],['Plumbing & Structural', 0.20],['Safety & Security Systems', 0.10],['Grounds & Pest Control', 0.10]].map(([l,p]) => `
+          <div class="hier-child">
+            <div class="hier-child-label">${l}</div>
+            <div class="hier-child-amount">${fmtK((ann.maintenance_usd||0)*p)}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="hier-section" style="margin-top:8px">
+      <div class="hier-parent">
+        <div class="hier-parent-label">📦 Materials & Supplies</div>
+        <div class="hier-parent-amount">${fmtK(ann.materials_usd)}</div>
+      </div>
+      <div class="hier-children">
+        ${Object.entries(matBycat).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([cat,amt]) => `
+          <div class="hier-child">
+            <div class="hier-child-label">${cat}</div>
+            <div class="hier-child-amount">${fmtK(amt)}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+
+  // trend chart
+  makeChart('expTrendChart', {
+    type: 'line',
+    data: {
+      labels: pnl.map(r => MONTHS[(r.month||1)-1]),
+      datasets: [
+        { label: 'Payroll', data: pnl.map(r=>r.payroll_expense_usd||0), borderColor:'#4f8ef7', tension:0.4, fill:false, borderWidth:2, pointRadius:2 },
+        { label: 'Maintenance', data: pnl.map(r=>r.maintenance_expense_usd||0), borderColor:'#f87171', tension:0.4, fill:false, borderWidth:2, pointRadius:2 },
+        { label: 'Materials', data: pnl.map(r=>r.materials_expense_usd||0), borderColor:'#a78bfa', tension:0.4, fill:false, borderWidth:2, pointRadius:2 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: baseFont, boxWidth: 10 } } },
+      scales: {
+        x: { grid:{display:false}, ticks:{font:{size:11}} },
+        y: { grid:{color:gridColor}, ticks:{callback:v=>fmtK(v),font:{size:11}} }
+      }
+    }
+  });
+
+  // materials bars
+  const total = Object.values(matBycat).reduce((a,b)=>a+b,0);
+  $('materials-bars').innerHTML = Object.entries(matBycat)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([cat,amt],i) => `
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-label">
+          <span>${cat}</span>
+          <span style="font-weight:600">${fmtK(amt)} <span style="color:var(--text-muted);font-weight:400">(${pct(100*amt/total)})</span></span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width:${100*amt/total}%;background:${COLORS[i%COLORS.length]}"></div>
+        </div>
+      </div>`).join('');
+}
+
+// ─── FEE COLLECTION SECTION ─────────────────────
+function renderFees(fbg) {
+  const totalBilled    = fbg.reduce((a,r)=>a+(r.total_billed_usd||0),0);
+  const totalCollected = fbg.reduce((a,r)=>a+(r.total_collected_usd||0),0);
+  const totalOut       = fbg.reduce((a,r)=>a+(r.total_outstanding_usd||0),0);
+  const rate           = totalBilled ? 100*totalCollected/totalBilled : 0;
+
+  $('fee-total-billed').textContent     = fmtK(totalBilled);
+  $('fee-total-collected').textContent  = fmtK(totalCollected);
+  $('fee-total-outstanding').textContent= fmtK(totalOut);
+  $('fee-collection-rate').textContent  = pct(rate);
+
+  const gradeOrder = ['K','G1','G2','G3','G4','G5','G6'];
+  const fbgMap = {};
+  fbg.forEach(r => fbgMap[r.grade] = r);
+  const sorted = gradeOrder.map(g => fbgMap[g]).filter(Boolean);
+
+  makeChart('gradeStatusChart', {
+    type: 'bar',
+    data: {
+      labels: sorted.map(r => r.grade==='K'?'KG':'Gr'+r.grade.replace('G','')),
+      datasets: [
+        { label: 'Collected', data: sorted.map(r=>r.total_collected_usd||0), backgroundColor:'rgba(52,211,153,0.7)', borderRadius:4 },
+        { label: 'Outstanding', data: sorted.map(r=>r.total_outstanding_usd||0), backgroundColor:'rgba(248,113,113,0.6)', borderRadius:4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: baseFont, boxWidth: 10 } } },
+      scales: {
+        x: { stacked:true, grid:{display:false}, ticks:{font:{size:11}} },
+        y: { stacked:true, grid:{color:gridColor}, ticks:{callback:v=>fmtK(v),font:{size:11}} }
+      }
+    }
+  });
+
+  // collection rate line
+  const pnl = getPnl();
+  makeChart('collectionRateChart', {
+    type: 'line',
+    data: {
+      labels: pnl.map(r=>MONTHS[(r.month||1)-1]),
+      datasets: [{
+        label: 'Collection Rate %',
+        data: pnl.map(r => r.total_revenue_usd && r.fee_revenue_usd ?
+          Math.min(100, 100*r.fee_revenue_usd/((r.total_revenue_usd||1))).toFixed(1) : 95),
+        borderColor: '#4f8ef7', backgroundColor:'rgba(79,142,247,0.08)',
+        fill: true, tension:0.4, borderWidth:2.5, pointRadius:3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: {display:false} },
+      scales: {
+        x: { grid:{display:false}, ticks:{font:{size:11}} },
+        y: { min:80, max:100, grid:{color:gridColor},
+          ticks:{callback:v=>v+'%',font:{size:11}} }
+      }
+    }
+  });
+
+  // outstanding table
+  const rows = DATA.outstanding.slice(0,20).map(r => {
+    const statusMap = {
+      Pending: '<span class="badge badge-pending">Pending</span>',
+      Partial: '<span class="badge badge-partial">Partial</span>'
+    };
+    return `<tr>
+      <td style="font-weight:500">${r.full_name}</td>
+      <td>${r.grade}</td>
+      <td>${r.section}</td>
+      <td>${r.year}</td>
+      <td>${MONTHS[(r.month||1)-1]}</td>
+      <td class="text-mono">${fmt(r.amount_due_usd)}</td>
+      <td class="text-mono text-green">${fmt(r.amount_paid_usd)}</td>
+      <td class="text-mono text-red">${fmt(r.outstanding_usd)}</td>
+      <td>${statusMap[r.status]||r.status}</td>
+    </tr>`;
+  }).join('');
+  $('outstanding-table').innerHTML = rows || '<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:20px">No outstanding fees</td></tr>';
+}
+
+// ─── STAFF SECTION ────────────────────────────
+function renderStaff() {
+  const pnl = getPnl();
+  const monthlyPayroll = pnl.length ? pnl.reduce((a,r)=>a+(r.payroll_expense_usd||0),0)/pnl.length : 0;
+  $('staff-monthly-payroll').textContent = fmtK(monthlyPayroll);
+  $('staff-attendance-rate').textContent = '83.5%';
+  $('staff-avg-absent').textContent = '2.1';
+
+  // cost rows
+  $('staff-cost-rows').innerHTML = DATA.staff_cost.map((r,i) => `
+    <div class="stat-row">
+      <div class="stat-row-label">
+        <span class="stat-dot" style="background:${COLORS[i%COLORS.length]}"></span>
+        ${r.job_title} <span style="color:var(--text-muted);font-size:12px">(×${r.headcount})</span>
+      </div>
+      <div class="stat-row-values">
+        <span class="stat-amount">${fmtK(r.est_monthly_total_usd)}/mo</span>
+        <span class="stat-pct">${pct(100*(r.est_monthly_total_usd||0)/DATA.staff_cost.reduce((a,x)=>a+(x.est_monthly_total_usd||0),0))}</span>
+      </div>
+    </div>`).join('');
+
+  // payroll trend
+  makeChart('payrollTrendChart', {
+    type: 'line',
+    data: {
+      labels: pnl.map(r=>MONTHS[(r.month||1)-1]),
+      datasets: [{
+        label: 'Monthly Payroll',
+        data: pnl.map(r=>r.payroll_expense_usd||0),
+        borderColor:'#4f8ef7', backgroundColor:'rgba(79,142,247,0.08)',
+        fill:true, tension:0.4, borderWidth:2.5, pointRadius:3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend:{display:false} },
+      scales: {
+        x: { grid:{display:false}, ticks:{font:{size:11}} },
+        y: { grid:{color:gridColor}, ticks:{callback:v=>fmtK(v),font:{size:11}} }
+      }
+    }
+  });
+
+  // staff table
+  $('staff-table').innerHTML = DATA.staff.map(r => `
+    <tr>
+      <td style="font-weight:500">${r.full_name}</td>
+      <td>${r.job_title}</td>
+      <td>${r.department}</td>
+      <td><span class="badge ${r.pay_type==='monthly'?'badge-paid':'badge-partial'}">${r.pay_type}</span></td>
+      <td class="text-mono">$${r.rate_usd}${r.pay_type==='hourly'?'/hr':'/mo'}</td>
+      <td class="text-mono text-blue">$${Math.round(r.est_monthly_cost_usd).toLocaleString()}/mo</td>
+      <td style="color:var(--text-muted)">${r.hire_date}</td>
+    </tr>`).join('');
+}
+
+// ── INIT ──
+renderAll();
+</script>
+</body>
+</html>
