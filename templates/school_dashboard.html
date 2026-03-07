@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<html lang="en"><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maple Street School — EasyData Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script><!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -601,6 +593,10 @@
     <div class="brand-sub">* This name and data are fabricated for confidentiality purposes and do not represent any real school or institution.</div>
   </div>
 
+  <div onclick="toggleBefore()" id="before-btn" style="margin:0 12px 14px;display:flex;align-items:center;justify-content:center;gap:8px;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;">
+    ✕ &nbsp;What they had before
+  </div>
+
   <div class="sidebar-section-label">Dashboard</div>
   <div class="nav-item active" onclick="showSection('overview', this)">
     <span class="nav-icon">📊</span> Overview
@@ -653,9 +649,6 @@
   </div>
 
       <div class="badge-live">AWS Live Pipeline</div>
-      <button onclick="toggleBefore()" id="before-btn" style="display:flex;align-items:center;gap:7px;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;">
-        ✕ &nbsp;What they had before
-      </button>
     </div>
   </div>
 
@@ -666,29 +659,29 @@
     <div style="background:#1e1e2e;border-bottom:3px solid #ef4444;padding:12px 24px;display:flex;align-items:flex-start;gap:20px;flex-shrink:0;">
       <div style="flex:1;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-          <span style="background:#ef4444;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.5px;">BEFORE EASYDATAHQ</span>
-          <span style="color:#f87171;font-size:12px;font-weight:600;">This is what Maple Street School was dealing with before we built their dashboard.</span>
+          <span style="background:#ef4444;color:#fff;font-size:16px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:0.5px;">BEFORE EASYDATAHQ</span>
+          <span style="color:#f87171;font-size:16px;font-weight:600;">This is what Maple Street School was dealing with before we built their dashboard.</span>
         </div>
         <div style="display:flex;gap:24px;flex-wrap:wrap;" id="before-hints">
-          <div id="hint-fees" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:8px 12px;font-size:11px;color:#fca5a5;min-width:180px;">
-            <div style="font-weight:700;color:#f87171;margin-bottom:4px;">📄 fee_collection sheet</div>
-            <div style="line-height:1.7;color:rgba(255,255,255,0.6);">• 12,000 rows with no summary<br>• Broken <span style="color:#fcd34d;font-family:monospace;">#REF!</span> formulas<br>• Status colour-coded manually<br>• No collection rate by grade</div>
+          <div id="hint-fees" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px 16px;font-size:15px;color:#fca5a5;min-width:220px;">
+            <div style="font-weight:700;color:#f87171;margin-bottom:6px;font-size:15px;">📄 fee_collection sheet</div>
+            <div style="line-height:1.8;color:rgba(255,255,255,0.7);font-size:14px;">• 12,000 rows with no summary<br>• Broken <span style="color:#fcd34d;font-family:monospace;">#REF!</span> formulas<br>• Status colour-coded manually<br>• No collection rate by grade</div>
           </div>
-          <div id="hint-payroll" style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:8px 12px;font-size:11px;color:#9ca3af;min-width:180px;">
-            <div style="font-weight:700;color:#d1d5db;margin-bottom:4px;">📄 payroll sheet</div>
-            <div style="line-height:1.7;color:rgba(255,255,255,0.4);">• Formula broke in October<br>• YTD column all <span style="color:#fcd34d;font-family:monospace;">#REF!</span><br>• Totals entered manually<br>• Out of date for 47 days</div>
+          <div id="hint-payroll" style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:12px 16px;font-size:15px;color:#9ca3af;min-width:220px;">
+            <div style="font-weight:700;color:#d1d5db;margin-bottom:6px;font-size:15px;">📄 payroll sheet</div>
+            <div style="line-height:1.8;color:rgba(255,255,255,0.55);font-size:14px;">• Formula broke in October<br>• YTD column all <span style="color:#fcd34d;font-family:monospace;">#REF!</span><br>• Totals entered manually<br>• Out of date for 47 days</div>
           </div>
-          <div id="hint-students" style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:8px 12px;font-size:11px;color:#9ca3af;min-width:180px;">
-            <div style="font-weight:700;color:#d1d5db;margin-bottom:4px;">📄 students sheet</div>
-            <div style="line-height:1.7;color:rgba(255,255,255,0.4);">• 14 duplicate student IDs<br>• Rows hidden by old filters<br>• Enrolment status unclear<br>• Notes in random cells</div>
+          <div id="hint-students" style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:12px 16px;font-size:15px;color:#9ca3af;min-width:220px;">
+            <div style="font-weight:700;color:#d1d5db;margin-bottom:6px;font-size:15px;">📄 students sheet</div>
+            <div style="line-height:1.8;color:rgba(255,255,255,0.55);font-size:14px;">• 14 duplicate student IDs<br>• Rows hidden by old filters<br>• Enrolment status unclear<br>• Notes in random cells</div>
           </div>
-          <div style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:8px 12px;font-size:11px;color:#9ca3af;min-width:160px;">
-            <div style="font-weight:700;color:#d1d5db;margin-bottom:4px;">📊 Charts</div>
-            <div style="line-height:1.7;color:rgba(255,255,255,0.4);">• Unlabelled axes<br>• Wrong source ranges<br>• No one knows what<br>&nbsp;&nbsp;Series 1 or 2 means</div>
+          <div style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:12px 16px;font-size:15px;color:#9ca3af;min-width:200px;">
+            <div style="font-weight:700;color:#d1d5db;margin-bottom:6px;font-size:15px;">📊 Charts</div>
+            <div style="line-height:1.8;color:rgba(255,255,255,0.55);font-size:14px;">• Unlabelled axes<br>• Wrong source ranges<br>• No one knows what<br>&nbsp;&nbsp;Series 1 or 2 means</div>
           </div>
         </div>
       </div>
-      <button onclick="toggleBefore()" style="background:#ef4444;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;flex-shrink:0;">✦ Back to Dashboard</button>
+      <button onclick="toggleBefore()" style="background:#064e3b;color:#34d399;border:2px solid #34d399;border-radius:8px;padding:12px 22px;font-size:16px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;flex-shrink:0;letter-spacing:0.2px;">✦ Back to Dashboard</button>
     </div>
 
     <!-- Excel ribbon -->
@@ -876,17 +869,17 @@
 
     <!-- Sheet tabs -->
     <div style="background:#d0d0d0;border-top:1px solid #bbb;display:flex;align-items:stretch;gap:0;padding:0 8px;flex-shrink:0;">
-      <div class="xl-tab active-tab" id="xtab-fees" onclick="switchSheet('fees')" style="background:#fff;border:1px solid #bbb;border-bottom:none;padding:4px 14px;font-size:10px;cursor:pointer;color:#333;font-weight:600;margin-right:2px;">📄 fee_collection</div>
-      <div class="xl-tab" id="xtab-payroll" onclick="switchSheet('payroll')" style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:4px 14px;font-size:10px;cursor:pointer;color:#666;margin-right:2px;">📄 payroll</div>
-      <div class="xl-tab" id="xtab-students" onclick="switchSheet('students')" style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:4px 14px;font-size:10px;cursor:pointer;color:#666;margin-right:2px;">📄 students</div>
-      <div style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:4px 14px;font-size:10px;cursor:pointer;color:#999;font-style:italic;margin-right:2px;">📄 staff_OLD</div>
-      <div style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:4px 14px;font-size:10px;cursor:pointer;color:#999;font-style:italic;margin-right:2px;">📄 TEMP_expenses_copy2</div>
-      <div style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:4px 14px;font-size:10px;cursor:pointer;color:#999;font-style:italic;">📄 Archive_2022</div>
-      <div style="margin-left:8px;display:flex;align-items:center;"><span style="font-size:14px;color:#666;cursor:pointer;">⊕</span></div>
+      <div class="xl-tab active-tab" id="xtab-fees" onclick="switchSheet('fees')" style="background:#fff;border:1px solid #bbb;border-bottom:none;padding:8px 18px;font-size:15px;cursor:pointer;color:#333;font-weight:600;margin-right:2px;">📄 fee_collection</div>
+      <div class="xl-tab" id="xtab-payroll" onclick="switchSheet('payroll')" style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:8px 18px;font-size:15px;cursor:pointer;color:#666;margin-right:2px;">📄 payroll</div>
+      <div class="xl-tab" id="xtab-students" onclick="switchSheet('students')" style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:8px 18px;font-size:15px;cursor:pointer;color:#666;margin-right:2px;">📄 students</div>
+      <div style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:8px 18px;font-size:15px;cursor:pointer;color:#999;font-style:italic;margin-right:2px;">📄 staff_OLD</div>
+      <div style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:8px 18px;font-size:15px;cursor:pointer;color:#999;font-style:italic;margin-right:2px;">📄 TEMP_expenses_copy2</div>
+      <div style="background:#e8e8e8;border:1px solid #bbb;border-bottom:none;padding:8px 18px;font-size:15px;cursor:pointer;color:#999;font-style:italic;">📄 Archive_2022</div>
+      <div style="margin-left:8px;display:flex;align-items:center;"><span style="font-size:22px;color:#666;cursor:pointer;padding:0 4px;">⊕</span></div>
       <div style="margin-left:auto;display:flex;align-items:center;padding:0 10px;">
-        <span style="font-size:10px;color:#666;">Ready &nbsp;|&nbsp; </span>
-        <span style="font-size:10px;color:#c00;font-weight:600;">&nbsp;⚠ 3 errors &nbsp;|&nbsp; </span>
-        <span style="font-size:10px;color:#555;">Average: $687.50 &nbsp;|&nbsp; Count: 12,000 &nbsp;|&nbsp; Sum: $8,250,000</span>
+        <span style="font-size:13px;color:#666;">Ready &nbsp;|&nbsp; </span>
+        <span style="font-size:13px;color:#c00;font-weight:600;">&nbsp;⚠ 3 errors &nbsp;|&nbsp; </span>
+        <span style="font-size:13px;color:#555;">Average: $687.50 &nbsp;|&nbsp; Count: 12,000 &nbsp;|&nbsp; Sum: $8,250,000</span>
       </div>
     </div>
 
@@ -1883,14 +1876,14 @@ function toggleBefore() {
     overlay.style.display = 'none';
     
     
-    btn.innerHTML = '✕ &nbsp;What they had before'; btn.style.background='#fee2e2'; btn.style.color='#991b1b'; btn.style.borderColor='#fca5a5';
+    btn.innerHTML = '✕ &nbsp;What they had before'; btn.style.background='#fee2e2'; btn.style.color='#991b1b'; btn.style.borderColor='#fca5a5'; btn.style.fontWeight='700';
   } else {
     overlay.style.display = 'flex';
     overlay.style.flexDirection = 'column';
     btn.style.background = '#0f1117';
     btn.style.color = '#34d399';
     btn.style.borderColor = '#34d399';
-    btn.innerHTML = '✦ &nbsp;Back to Dashboard';
+    btn.innerHTML = '✦ &nbsp;Back to Dashboard'; btn.style.background='#064e3b'; btn.style.color='#34d399'; btn.style.borderColor='#34d399';
     buildExcelRows();
   }
 }
