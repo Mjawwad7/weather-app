@@ -6,6 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maple Street School — EasyData Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maple Street School — EasyData Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
@@ -646,14 +653,43 @@
   </div>
 
       <div class="badge-live">AWS Live Pipeline</div>
-      <button onclick="toggleBefore()" id="before-btn" style="display:flex;align-items:center;gap:7px;background:#fff3cd;color:#856404;border:1px solid #ffc107;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;">
-        ❌ Before EasyData ❌
+      <button onclick="toggleBefore()" id="before-btn" style="display:flex;align-items:center;gap:7px;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;">
+        ✕ &nbsp;What they had before
       </button>
     </div>
   </div>
 
   <!-- ═══════ BEFORE EASYDATA OVERLAY ═══════ -->
   <div id="before-overlay" style="display:none;position:fixed;top:0;left:var(--sidebar-width);right:0;bottom:0;z-index:200;flex-direction:column;background:#f0f0f0;">
+
+    <!-- Context banner -->
+    <div style="background:#1e1e2e;border-bottom:3px solid #ef4444;padding:12px 24px;display:flex;align-items:flex-start;gap:20px;flex-shrink:0;">
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <span style="background:#ef4444;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.5px;">BEFORE EASYDATAHQ</span>
+          <span style="color:#f87171;font-size:12px;font-weight:600;">This is what Maple Street School was dealing with before we built their dashboard.</span>
+        </div>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;" id="before-hints">
+          <div id="hint-fees" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:8px 12px;font-size:11px;color:#fca5a5;min-width:180px;">
+            <div style="font-weight:700;color:#f87171;margin-bottom:4px;">📄 fee_collection sheet</div>
+            <div style="line-height:1.7;color:rgba(255,255,255,0.6);">• 12,000 rows with no summary<br>• Broken <span style="color:#fcd34d;font-family:monospace;">#REF!</span> formulas<br>• Status colour-coded manually<br>• No collection rate by grade</div>
+          </div>
+          <div id="hint-payroll" style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:8px 12px;font-size:11px;color:#9ca3af;min-width:180px;">
+            <div style="font-weight:700;color:#d1d5db;margin-bottom:4px;">📄 payroll sheet</div>
+            <div style="line-height:1.7;color:rgba(255,255,255,0.4);">• Formula broke in October<br>• YTD column all <span style="color:#fcd34d;font-family:monospace;">#REF!</span><br>• Totals entered manually<br>• Out of date for 47 days</div>
+          </div>
+          <div id="hint-students" style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:8px 12px;font-size:11px;color:#9ca3af;min-width:180px;">
+            <div style="font-weight:700;color:#d1d5db;margin-bottom:4px;">📄 students sheet</div>
+            <div style="line-height:1.7;color:rgba(255,255,255,0.4);">• 14 duplicate student IDs<br>• Rows hidden by old filters<br>• Enrolment status unclear<br>• Notes in random cells</div>
+          </div>
+          <div style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;padding:8px 12px;font-size:11px;color:#9ca3af;min-width:160px;">
+            <div style="font-weight:700;color:#d1d5db;margin-bottom:4px;">📊 Charts</div>
+            <div style="line-height:1.7;color:rgba(255,255,255,0.4);">• Unlabelled axes<br>• Wrong source ranges<br>• No one knows what<br>&nbsp;&nbsp;Series 1 or 2 means</div>
+          </div>
+        </div>
+      </div>
+      <button onclick="toggleBefore()" style="background:#ef4444;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;flex-shrink:0;">✦ Back to Dashboard</button>
+    </div>
 
     <!-- Excel ribbon -->
     <div style="background:#217346;padding:0;flex-shrink:0;">
@@ -1845,16 +1881,16 @@ function toggleBefore() {
   const isVisible = overlay.style.display !== 'none';
   if (isVisible) {
     overlay.style.display = 'none';
-    btn.style.background = '#fff3cd';
-    btn.style.color = '#856404';
-    btn.textContent = '📊 Before EasyData HQ';
+    
+    
+    btn.innerHTML = '✕ &nbsp;What they had before'; btn.style.background='#fee2e2'; btn.style.color='#991b1b'; btn.style.borderColor='#fca5a5';
   } else {
     overlay.style.display = 'flex';
     overlay.style.flexDirection = 'column';
     btn.style.background = '#0f1117';
     btn.style.color = '#34d399';
     btn.style.borderColor = '#34d399';
-    btn.textContent = '✦ Back to Dashboard';
+    btn.innerHTML = '✦ &nbsp;Back to Dashboard';
     buildExcelRows();
   }
 }
@@ -1863,11 +1899,24 @@ function switchSheet(name) {
   ['fees','payroll','students'].forEach(s => {
     const el = document.getElementById('sheet-' + s);
     const tab = document.getElementById('xtab-' + s);
+    const hint = document.getElementById('hint-' + s);
     if (el) el.style.display = s === name ? 'block' : 'none';
     if (tab) {
       tab.style.background = s === name ? '#fff' : '#e8e8e8';
       tab.style.color = s === name ? '#333' : '#666';
       tab.style.fontWeight = s === name ? '600' : '400';
+    }
+    if (hint) {
+      if (s === name) {
+        hint.style.background = 'rgba(239,68,68,0.1)';
+        hint.style.borderColor = 'rgba(239,68,68,0.3)';
+        hint.querySelector('div').style.color = '#f87171';
+      } else {
+        hint.style.background = 'rgba(107,114,128,0.1)';
+        hint.style.borderColor = 'rgba(107,114,128,0.2)';
+        const titleDiv = hint.querySelector('div');
+        if (titleDiv) titleDiv.style.color = '#d1d5db';
+      }
     }
   });
 }
