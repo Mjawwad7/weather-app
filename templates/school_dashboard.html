@@ -441,6 +441,20 @@
   .data-table tr:last-child td { border-bottom: none; }
   .data-table tr:hover td { background: var(--surface2); }
 
+  .data-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .data-table th.sortable:hover { color: var(--text-primary); background: var(--border); }
+  .data-table th.sortable::after {
+    content: ' ⇅';
+    opacity: 0.35;
+    font-size: 10px;
+  }
+  .data-table th.sort-asc::after  { content: ' ↑'; opacity: 0.85; color: #4f8ef7; }
+  .data-table th.sort-desc::after { content: ' ↓'; opacity: 0.85; color: #4f8ef7; }
+
   .badge {
     display: inline-flex;
     align-items: center;
@@ -910,18 +924,18 @@
           <div class="panel-subtitle">Students with pending or partial balances</div>
         </div>
         <div class="panel-body" style="padding:0">
-          <table class="data-table">
+          <table class="data-table" id="outstanding-table-el">
             <thead>
-              <tr>
-                <th>Student</th>
-                <th>Grade</th>
-                <th>Section</th>
-                <th>Year</th>
-                <th>Month</th>
-                <th>Due</th>
-                <th>Paid</th>
-                <th>Outstanding</th>
-                <th>Status</th>
+              <tr id="outstanding-thead-row">
+                <th class="sortable" data-col="full_name" data-type="str">Student</th>
+                <th class="sortable" data-col="grade" data-type="str">Grade</th>
+                <th class="sortable" data-col="section" data-type="str">Section</th>
+                <th class="sortable" data-col="year" data-type="num">Year</th>
+                <th class="sortable" data-col="month" data-type="num">Month</th>
+                <th class="sortable" data-col="amount_due_usd" data-type="num">Due</th>
+                <th class="sortable" data-col="amount_paid_usd" data-type="num">Paid</th>
+                <th class="sortable" data-col="outstanding_usd" data-type="num">Outstanding</th>
+                <th class="sortable" data-col="status" data-type="str">Status</th>
               </tr>
             </thead>
             <tbody id="outstanding-table"></tbody>
@@ -979,16 +993,16 @@
           <div class="panel-title">Staff Roster & Estimated Monthly Cost</div>
         </div>
         <div class="panel-body" style="padding:0">
-          <table class="data-table">
+          <table class="data-table" id="staff-table-el">
             <thead>
-              <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Department</th>
-                <th>Pay Type</th>
-                <th>Rate</th>
-                <th>Est. Monthly Cost</th>
-                <th>Hire Date</th>
+              <tr id="staff-thead-row">
+                <th class="sortable" data-col="full_name" data-type="str">Name</th>
+                <th class="sortable" data-col="job_title" data-type="str">Role</th>
+                <th class="sortable" data-col="department" data-type="str">Department</th>
+                <th class="sortable" data-col="pay_type" data-type="str">Pay Type</th>
+                <th class="sortable" data-col="rate_usd" data-type="num">Rate</th>
+                <th class="sortable" data-col="est_monthly_cost_usd" data-type="num">Est. Monthly Cost</th>
+                <th class="sortable" data-col="hire_date" data-type="str">Hire Date</th>
               </tr>
             </thead>
             <tbody id="staff-table"></tbody>
@@ -1488,12 +1502,26 @@ function renderFees(fbg) {
   });
 
   // outstanding table
-  const rows = DATA.outstanding.slice(0,20).map(r => {
-    const statusMap = {
-      Pending: '<span class="badge badge-pending">Pending</span>',
-      Partial: '<span class="badge badge-partial">Partial</span>'
-    };
-    return `<tr>
+  renderOutstandingRows();
+  bindSortable('outstanding-thead-row', 'outstanding-table', renderOutstandingRows, outstandingSort);
+}
+
+const outstandingSort = { col: null, dir: 1 };
+function renderOutstandingRows() {
+  const statusMap = {
+    Pending: '<span class="badge badge-pending">Pending</span>',
+    Partial: '<span class="badge badge-partial">Partial</span>'
+  };
+  let data = [...DATA.outstanding.slice(0, 20)];
+  if (outstandingSort.col) {
+    data.sort((a, b) => {
+      const av = a[outstandingSort.col], bv = b[outstandingSort.col];
+      return outstandingSort.dir * (outstandingSort.type === 'num'
+        ? (parseFloat(av)||0) - (parseFloat(bv)||0)
+        : String(av||'').localeCompare(String(bv||'')));
+    });
+  }
+  const rows = data.map(r => `<tr>
       <td style="font-weight:500">${r.full_name}</td>
       <td>${r.grade}</td>
       <td>${r.section}</td>
@@ -1503,8 +1531,7 @@ function renderFees(fbg) {
       <td class="text-mono text-green">${fmt(r.amount_paid_usd)}</td>
       <td class="text-mono text-red">${fmt(r.outstanding_usd)}</td>
       <td>${statusMap[r.status]||r.status}</td>
-    </tr>`;
-  }).join('');
+    </tr>`).join('');
   $('outstanding-table').innerHTML = rows || '<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:20px">No outstanding fees</td></tr>';
 }
 
@@ -1552,7 +1579,22 @@ function renderStaff() {
   });
 
   // staff table
-  $('staff-table').innerHTML = DATA.staff.map(r => `
+  renderStaffRows();
+  bindSortable('staff-thead-row', 'staff-table', renderStaffRows, staffSort);
+}
+
+const staffSort = { col: null, dir: 1 };
+function renderStaffRows() {
+  let data = [...DATA.staff];
+  if (staffSort.col) {
+    data.sort((a, b) => {
+      const av = a[staffSort.col], bv = b[staffSort.col];
+      return staffSort.dir * (staffSort.type === 'num'
+        ? (parseFloat(av)||0) - (parseFloat(bv)||0)
+        : String(av||'').localeCompare(String(bv||'')));
+    });
+  }
+  $('staff-table').innerHTML = data.map(r => `
     <tr>
       <td style="font-weight:500">${r.full_name}</td>
       <td>${r.job_title}</td>
@@ -1562,6 +1604,28 @@ function renderStaff() {
       <td class="text-mono text-blue">$${Math.round(r.est_monthly_cost_usd).toLocaleString()}/mo</td>
       <td style="color:var(--text-muted)">${r.hire_date}</td>
     </tr>`).join('');
+}
+
+// ─── SORTABLE TABLES ──────────────────────────
+function bindSortable(theadRowId, tbodyId, renderFn, sortState) {
+  const row = $(theadRowId);
+  if (!row || row._sortBound) return;
+  row._sortBound = true;
+  row.querySelectorAll('th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (sortState.col === col) {
+        sortState.dir *= -1;
+      } else {
+        sortState.col = col;
+        sortState.type = th.dataset.type;
+        sortState.dir = 1;
+      }
+      row.querySelectorAll('th').forEach(t => t.classList.remove('sort-asc','sort-desc'));
+      th.classList.add(sortState.dir === 1 ? 'sort-asc' : 'sort-desc');
+      renderFn();
+    });
+  });
 }
 
 // ── INIT ──
