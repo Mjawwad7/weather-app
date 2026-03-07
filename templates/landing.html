@@ -461,7 +461,7 @@
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
-            <select id="sd-year" onchange="sdShow(sdActive)" style="background:#1e2535;color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:4px 8px;font-size:11px;outline:none;cursor:pointer;">
+            <select id="sd-year" onchange="sdApplyYear()" style="background:#1e2535;color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:4px 8px;font-size:11px;outline:none;cursor:pointer;">
               <option value="all">All Years</option>
               <option value="2023">2023</option>
               <option value="2024">2024</option>
@@ -540,18 +540,18 @@
             <!-- REVENUE -->
             <div id="sd-revenue" style="display:none;">
               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;">
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #4f8ef7;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Total Revenue</div><div style="font-size:17px;font-weight:700;color:#111;">$5.4M</div></div>
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #34d399;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Tuition Fees</div><div style="font-size:17px;font-weight:700;color:#111;">$5.3M</div><div style="font-size:10px;color:#9ca3af;">97.9% of revenue</div></div>
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #fbbf24;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Events Revenue</div><div style="font-size:17px;font-weight:700;color:#111;">$114K</div><div style="font-size:10px;color:#9ca3af;">2.1% of revenue</div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #4f8ef7;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Total Revenue</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-rev-total">$5.4M</span></div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #34d399;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Tuition Fees</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-rev-tuition">$5.3M</span></div><div style="font-size:10px;color:#9ca3af;"><span id="sd-rev-tuition-pct">97.9% of revenue</span></div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #fbbf24;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Events Revenue</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-rev-events">$114K</span></div><div style="font-size:10px;color:#9ca3af;"><span id="sd-rev-events-pct">2.1% of revenue</span></div></div>
               </div>
               <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);margin-bottom:8px;">
                 <div style="font-size:11px;font-weight:600;color:#111;margin-bottom:10px;">Fee Collection by Grade</div>
                 <div style="display:flex;flex-direction:column;gap:7px;">
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Kindergarten</span><span style="font-weight:600;color:#111;">91.2% · $812K</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div style="width:91.2%;background:#4f8ef7;border-radius:3px;height:100%;"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 1</span><span style="font-weight:600;color:#111;">88.7% · $793K</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div style="width:88.7%;background:#34d399;border-radius:3px;height:100%;"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 2</span><span style="font-weight:600;color:#111;">86.3% · $771K</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div style="width:86.3%;background:#f87171;border-radius:3px;height:100%;"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 3</span><span style="font-weight:600;color:#111;">89.1% · $796K</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div style="width:89.1%;background:#fbbf24;border-radius:3px;height:100%;"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 4–6</span><span style="font-weight:600;color:#111;">85.8% · $1.13M</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div style="width:85.8%;background:#a78bfa;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Kindergarten</span><span style="font-weight:600;color:#111;" id="sd-rev-kg">91.2% · $812K</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div id="sd-bar-kg" style="width:91.2%;background:#4f8ef7;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 1</span><span style="font-weight:600;color:#111;" id="sd-rev-g1">88.7% · $793K</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div id="sd-bar-g1" style="width:88.7%;background:#34d399;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 2</span><span style="font-weight:600;color:#111;" id="sd-rev-g2">86.3% · $771K</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div id="sd-bar-g2" style="width:86.3%;background:#f87171;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 3</span><span style="font-weight:600;color:#111;" id="sd-rev-g3">89.1% · $796K</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div id="sd-bar-g3" style="width:89.1%;background:#fbbf24;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 4–6</span><span style="font-weight:600;color:#111;" id="sd-rev-g46">85.8% · $1.13M</span></div><div style="background:#f0f3f8;border-radius:3px;height:6px;"><div id="sd-bar-g46" style="width:85.8%;background:#a78bfa;border-radius:3px;height:100%;"></div></div></div>
                 </div>
               </div>
               <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
@@ -575,10 +575,10 @@
             <!-- EXPENSES -->
             <div id="sd-expenses" style="display:none;">
               <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #f87171;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Total Expenses</div><div style="font-size:17px;font-weight:700;color:#111;">$4.8M</div></div>
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #4f8ef7;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Payroll</div><div style="font-size:17px;font-weight:700;color:#111;">$2.98M</div><div style="font-size:10px;color:#9ca3af;">62%</div></div>
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #fbbf24;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Maintenance</div><div style="font-size:17px;font-weight:700;color:#111;">$864K</div><div style="font-size:10px;color:#9ca3af;">18%</div></div>
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #34d399;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Materials</div><div style="font-size:17px;font-weight:700;color:#111;">$576K</div><div style="font-size:10px;color:#9ca3af;">12%</div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #f87171;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Total Expenses</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-exp-total">$4.8M</span></div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #4f8ef7;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Payroll</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-exp-payroll">$2.98M</span></div><div style="font-size:10px;color:#9ca3af;">62%</div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #fbbf24;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Maintenance</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-exp-maint">$864K</span></div><div style="font-size:10px;color:#9ca3af;">18%</div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #34d399;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Materials</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-exp-mat">$576K</span></div><div style="font-size:10px;color:#9ca3af;">12%</div></div>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
                 <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
@@ -621,19 +621,19 @@
             <!-- FEE COLLECTION -->
             <div id="sd-fees" style="display:none;">
               <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #34d399;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Collected</div><div style="font-size:17px;font-weight:700;color:#059669;">$4.72M</div><div style="font-size:10px;color:#9ca3af;">88.4%</div></div>
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #f87171;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Outstanding</div><div style="font-size:17px;font-weight:700;color:#dc2626;">$619K</div><div style="font-size:10px;color:#9ca3af;">11.6%</div></div>
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #fbbf24;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Pending</div><div style="font-size:17px;font-weight:700;color:#111;">480</div><div style="font-size:10px;color:#9ca3af;">records</div></div>
-                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #a78bfa;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Partial</div><div style="font-size:17px;font-weight:700;color:#111;">240</div><div style="font-size:10px;color:#9ca3af;">records</div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #34d399;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Collected</div><div style="font-size:17px;font-weight:700;color:#059669;"><span id="sd-fee-col">$4.72M</span></div><div style="font-size:10px;color:#9ca3af;"><span id="sd-fee-colpct">88.4%</span></div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #f87171;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Outstanding</div><div style="font-size:17px;font-weight:700;color:#dc2626;"><span id="sd-fee-out">$619K</span></div><div style="font-size:10px;color:#9ca3af;">11.6%</div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #fbbf24;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Pending</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-fee-pend">480</span></div><div style="font-size:10px;color:#9ca3af;">records</div></div>
+                <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);border-top:3px solid #a78bfa;"><div style="font-size:9px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Partial</div><div style="font-size:17px;font-weight:700;color:#111;"><span id="sd-fee-part">240</span></div><div style="font-size:10px;color:#9ca3af;">records</div></div>
               </div>
               <div style="background:#fff;border-radius:7px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,0.07);margin-bottom:8px;">
                 <div style="font-size:11px;font-weight:600;color:#111;margin-bottom:10px;">Collection Rate by Grade</div>
                 <div style="display:flex;flex-direction:column;gap:8px;">
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Kindergarten</span><span style="font-weight:700;color:#059669;">91.2%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div style="width:91.2%;background:#4f8ef7;border-radius:3px;height:100%;"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 1</span><span style="font-weight:700;color:#059669;">88.7%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div style="width:88.7%;background:#34d399;border-radius:3px;height:100%;"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 2</span><span style="font-weight:700;color:#d97706;">86.3%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div style="width:86.3%;background:#f87171;border-radius:3px;height:100%;"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 3</span><span style="font-weight:700;color:#059669;">89.1%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div style="width:89.1%;background:#fbbf24;border-radius:3px;height:100%;"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 4–6</span><span style="font-weight:700;color:#d97706;">85.8%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div style="width:85.8%;background:#a78bfa;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Kindergarten</span><span style="font-weight:700;color:#059669;" id="sd-fee-kg">91.2%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div id="sd-fbar-kg" style="width:91.2%;background:#4f8ef7;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 1</span><span style="font-weight:700;color:#059669;" id="sd-fee-g1">88.7%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div id="sd-fbar-g1" style="width:88.7%;background:#34d399;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 2</span><span style="font-weight:700;color:#d97706;" id="sd-fee-g2">86.3%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div id="sd-fbar-g2" style="width:86.3%;background:#f87171;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 3</span><span style="font-weight:700;color:#059669;" id="sd-fee-g3">89.1%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div id="sd-fbar-g3" style="width:89.1%;background:#fbbf24;border-radius:3px;height:100%;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:3px;"><span>Grade 4–6</span><span style="font-weight:700;color:#d97706;" id="sd-fee-g46">85.8%</span></div><div style="background:#f0f3f8;border-radius:3px;height:8px;"><div id="sd-fbar-g46" style="width:85.8%;background:#a78bfa;border-radius:3px;height:100%;"></div></div></div>
                 </div>
               </div>
               <div style="background:#fff;border-radius:7px;padding:0;box-shadow:0 1px 3px rgba(0,0,0,0.07);overflow:hidden;">
@@ -765,6 +765,66 @@
   }
 
   let sdActive = 'overview';
+
+  // Year-keyed demo data for the school dashboard
+  const sdData = {
+    all:  { rev:'$5.4M', exp:'$4.8M', profit:'$622K', margin:'11.5%', col:'88.4%',
+            tuition:'$5.3M', tuitionPct:'97.9%', events:'$114K', eventsPct:'2.1%',
+            totalExp:'$4.8M', payroll:'$2.98M', maintenance:'$864K', materials:'$576K',
+            collected:'$4.72M', outstanding:'$619K', pendingCnt:'480', partialCnt:'240',
+            colKG:'91.2%', colG1:'88.7%', colG2:'86.3%', colG3:'89.1%', colG46:'85.8%',
+            colKGAmt:'$812K', colG1Amt:'$793K', colG2Amt:'$771K', colG3Amt:'$796K', colG46Amt:'$1.13M' },
+    '2023':{ rev:'$2.6M', exp:'$2.3M', profit:'$298K', margin:'11.1%', col:'87.2%',
+            tuition:'$2.55M', tuitionPct:'98.1%', events:'$49K', eventsPct:'1.9%',
+            totalExp:'$2.3M', payroll:'$1.43M', maintenance:'$414K', materials:'$276K',
+            collected:'$2.27M', outstanding:'$330K', pendingCnt:'241', partialCnt:'118',
+            colKG:'90.4%', colG1:'87.9%', colG2:'85.1%', colG3:'88.3%', colG46:'84.2%',
+            colKGAmt:'$391K', colG1Amt:'$382K', colG2Amt:'$370K', colG3Amt:'$384K', colG46Amt:'$543K' },
+    '2024':{ rev:'$2.8M', exp:'$2.5M', profit:'$324K', margin:'11.8%', col:'89.5%',
+            tuition:'$2.74M', tuitionPct:'97.7%', events:'$65K', eventsPct:'2.3%',
+            totalExp:'$2.5M', payroll:'$1.55M', maintenance:'$450K', materials:'$300K',
+            collected:'$2.45M', outstanding:'$289K', pendingCnt:'239', partialCnt:'122',
+            colKG:'92.0%', colG1:'89.5%', colG2:'87.4%', colG3:'89.8%', colG46:'87.3%',
+            colKGAmt:'$421K', colG1Amt:'$411K', colG2Amt:'$401K', colG3Amt:'$412K', colG46Amt:'$587K' }
+  };
+
+  function sdSetText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+  function sdSetWidth(id, val) { const el = document.getElementById(id); if (el) el.style.width = val; }
+
+  function sdApplyYear() {
+    const yr = (document.getElementById('sd-year') || {value:'all'}).value || 'all';
+    const d = sdData[yr] || sdData['all'];
+    // Overview KPIs
+    sdSetText('sd-kpi-rev', d.rev);      sdSetText('sd-kpi-exp', d.exp);
+    sdSetText('sd-kpi-profit', d.profit); sdSetText('sd-kpi-margin', d.margin + ' margin');
+    sdSetText('sd-kpi-col', d.col);
+    // Revenue
+    sdSetText('sd-rev-total', d.rev);    sdSetText('sd-rev-tuition', d.tuition);
+    sdSetText('sd-rev-tuition-pct', d.tuitionPct + ' of revenue');
+    sdSetText('sd-rev-events', d.events); sdSetText('sd-rev-events-pct', d.eventsPct + ' of revenue');
+    sdSetText('sd-rev-kg', d.colKG + ' · ' + d.colKGAmt);
+    sdSetText('sd-rev-g1', d.colG1 + ' · ' + d.colG1Amt);
+    sdSetText('sd-rev-g2', d.colG2 + ' · ' + d.colG2Amt);
+    sdSetText('sd-rev-g3', d.colG3 + ' · ' + d.colG3Amt);
+    sdSetText('sd-rev-g46', d.colG46 + ' · ' + d.colG46Amt);
+    sdSetWidth('sd-bar-kg', d.colKG);    sdSetWidth('sd-bar-g1', d.colG1);
+    sdSetWidth('sd-bar-g2', d.colG2);    sdSetWidth('sd-bar-g3', d.colG3);
+    sdSetWidth('sd-bar-g46', d.colG46);
+    // Expenses
+    sdSetText('sd-exp-total', d.totalExp); sdSetText('sd-exp-payroll', d.payroll);
+    sdSetText('sd-exp-maint', d.maintenance); sdSetText('sd-exp-mat', d.materials);
+    // Fees
+    sdSetText('sd-fee-col', d.collected);    sdSetText('sd-fee-colpct', d.col);
+    sdSetText('sd-fee-out', d.outstanding);
+    sdSetText('sd-fee-pend', d.pendingCnt); sdSetText('sd-fee-part', d.partialCnt);
+    sdSetText('sd-fee-kg', d.colKG);   sdSetText('sd-fee-g1', d.colG1);
+    sdSetText('sd-fee-g2', d.colG2);   sdSetText('sd-fee-g3', d.colG3);
+    sdSetText('sd-fee-g46', d.colG46);
+    sdSetWidth('sd-fbar-kg', d.colKG); sdSetWidth('sd-fbar-g1', d.colG1);
+    sdSetWidth('sd-fbar-g2', d.colG2); sdSetWidth('sd-fbar-g3', d.colG3);
+    sdSetWidth('sd-fbar-g46', d.colG46);
+  }
+
   function sdShow(name) {
     sdActive = name;
     ['overview','revenue','expenses','fees','staff'].forEach(s => {
@@ -785,6 +845,7 @@
         }
       }
     });
+    sdApplyYear();
   }
 
   function showTab(tab) {
